@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Bluebird from 'bluebird';
 import { OrderedMap } from 'immutable';
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 import yaml from 'js-yaml';
 
 import action from '../lib/action';

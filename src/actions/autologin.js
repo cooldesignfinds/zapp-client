@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { CardAPI, GeneratorAPI, ProjectAPI, SubscriptionAPI, TeamAPI, TrialAPI, UserAPI } from 'zapp-sdk';
+import { CardAPI, GeneratorAPI, ProjectAPI, SubscriptionAPI, TeamAPI, TrialAPI, UserAPI } from '@zappjs/sdk';
 
 import listGenerators from './listGenerators';
 import listUserGenerators from './listUserGenerators';

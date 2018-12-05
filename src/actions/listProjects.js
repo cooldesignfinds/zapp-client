@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 function listProjects(id) {
   return (dispatch) => {

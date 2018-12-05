@@ -1,4 +1,4 @@
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import action from '../lib/action';
 

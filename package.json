@@ -29,6 +29,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "@zappjs/sdk": "^0.1.0",
     "axios": "^0.16.2",
     "babel-core": "^6.26.0",
     "bluebird": "^3.5.0",
@@ -61,7 +62,6 @@
     "dev": "webpack-dev-server",
     "dev-build": "NODE_ENV=development webpack",
     "build": "NODE_ENV=production webpack",
-    "postinstall": "npm link zapp-sdk",
     "test": "mocha --recursive --require babel-register"
   }
 }

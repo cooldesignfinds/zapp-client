@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import hideModal from './hideModal';
 

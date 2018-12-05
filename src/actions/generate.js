@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 import Bluebird from 'bluebird';
-import { ProjectAPI } from 'zapp-sdk';
+import { ProjectAPI } from '@zappjs/sdk';
 
 import expandPaneTreeItem from './expandPaneTreeItem';
 import selectPaneTreeItem from './selectPaneTreeItem';

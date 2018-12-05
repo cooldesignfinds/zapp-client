@@ -1,5 +1,5 @@
 import Bluebird from 'bluebird';
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import getItemPathParts from './getItemPathParts';
 import orderedMapToObject from './orderedMapToObject';

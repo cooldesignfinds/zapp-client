@@ -1,4 +1,4 @@
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 function createProject(opts) {
   return async (dispatch) => {

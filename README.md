@@ -1,16 +1,27 @@
-# zapp-editor
+# zapp-client
 
-## Deploy to Production
+> gui for zappjs
+
+## Get Started
+
+### Install
 
 ```
-cd ./build/web && \
-  aws s3 rm s3://$ZAPP_EDITOR_BUCKET --recursive && \
-  aws s3 sync . s3://$ZAPP_EDITOR_BUCKET --acl public-read ; \
-  aws cloudfront create-invalidation --distribution-id $ZAPP_EDITOR_DISTRIBUTION --paths /\* && \
-  cd ../.. && \
-cd ./build/electron && \
-  aws s3 rm s3://$ZAPP_EDITOR_DESKTOP_BUCKET --recursive && \
-  aws s3 sync . s3://$ZAPP_EDITOR_DESKTOP_BUCKET --acl public-read ; \
-  aws cloudfront create-invalidation --distribution-id $ZAPP_EDITOR_DESKTOP_DISTRIBUTION --paths /\* && \
-  cd ../..
+npm install
 ```
+
+### Build
+
+```
+npm run build
+```
+
+### Run
+
+```
+npm run dev
+```
+
+## Usage
+
+http://localhost:3000/?code=~/Developer/my-app

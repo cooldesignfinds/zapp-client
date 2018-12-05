@@ -1,4 +1,4 @@
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import hideModal from './hideModal';
 

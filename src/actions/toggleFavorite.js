@@ -1,4 +1,4 @@
-import { UserAPI } from 'zapp-sdk';
+import { UserAPI } from '@zappjs/sdk';
 
 import action from '../lib/action';
 

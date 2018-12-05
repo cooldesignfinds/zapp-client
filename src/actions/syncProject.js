@@ -1,5 +1,5 @@
 import { OrderedMap } from 'immutable';
-import { ProjectAPI } from 'zapp-sdk';
+import { ProjectAPI } from '@zappjs/sdk';
 
 import hideModal from './hideModal';
 import orderedMapToObject from '../lib/orderedMapToObject';

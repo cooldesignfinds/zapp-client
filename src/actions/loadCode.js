@@ -1,4 +1,4 @@
-import { ProjectAPI } from 'zapp-sdk';
+import { ProjectAPI } from '@zappjs/sdk';
 
 import getItemPath from '../lib/getItemPath';
 

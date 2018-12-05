@@ -1,4 +1,4 @@
-import { UserAPI } from 'zapp-sdk';
+import { UserAPI } from '@zappjs/sdk';
 
 export default function logout() {
   return async (dispatch) => {

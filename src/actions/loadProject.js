@@ -1,5 +1,5 @@
 import { OrderedMap } from 'immutable';
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import getItemPathParts from '../lib/getItemPathParts';
 import objectToOrderedMap from '../lib/objectToOrderedMap';

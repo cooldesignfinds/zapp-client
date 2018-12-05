@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GeneratorAPI } from 'zapp-sdk';
+import { GeneratorAPI } from '@zappjs/sdk';
 
 import action from '../lib/action';
 import orderedMapToObject from '../lib/orderedMapToObject';
