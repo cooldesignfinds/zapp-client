@@ -82,8 +82,7 @@ const plugins = [
     })
   }),
   new CopyWebpackPlugin([
-    { from: 'images', to: 'images' },
-    { from: 'scripts', to: 'scripts' }
+    { from: 'images', to: 'images' }
   ]),
   new HandlebarsWebpackPlugin({
     entry: path.join(process.cwd(), 'src', '*.hbs'),
