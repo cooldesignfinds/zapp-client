@@ -1,7 +1,6 @@
 {
-  "name": "zapp-app",
+  "name": "@zappjs/client",
   "version": "0.1.0",
-  "private": true,
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -59,9 +58,8 @@
     "xterm": "^3.4.1"
   },
   "scripts": {
-    "dev": "webpack-dev-server",
-    "dev-build": "NODE_ENV=development webpack",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=development webpack",
+    "start": "webpack-dev-server",
     "test": "mocha --recursive --require babel-register"
   }
 }

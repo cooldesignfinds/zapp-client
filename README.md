@@ -19,7 +19,7 @@ npm run build
 ### Run
 
 ```
-npm run dev
+npm start
 ```
 
 ## Usage
