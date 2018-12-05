@@ -1,0 +1,31 @@
+.icon
+  background-color: transparent
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: contain
+  display: inline-block
+
+.iconButton
+  cursor: pointer
+  display: inline-block
+  opacity: .75
+  text-align: center
+  transition: transform .2s
+  vertical-align: middle
+
+  &:active
+    color: transparent
+
+  &:hover
+    color: transparent
+    opacity: 1
+
+  &[disabled]
+    cursor: default
+    opacity: .25
+
+  &.rotated
+    transform: rotate(90deg)
+
+.tutorialMode
+  pointer-events: none

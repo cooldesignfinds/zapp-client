@@ -1,0 +1,47 @@
+@import '../../styles/Variables.sass'
+
+.pathSelector
+  height: 25px
+
+  button
+    border-bottom: 1px #000 solid
+    height: 25px !important
+    opacity: .75
+
+    &:hover
+      color: $hover-color
+      opacity: 1
+
+.pathSelectorInput
+  background: none
+  border: none
+  border-bottom-style: solid
+  border-bottom-width: 1px
+  color: #999
+  display: inline-block
+  height: 25px
+  padding: 0 0 0 5px
+  width: 100%
+
+  &:hover
+    color: $hover-color
+
+  &:focus
+    color: $hover-color
+    border-bottom-color: $highlight-color
+    cursor: text
+
+.pathSelectorForm
+  display: inline-block
+  text-align: left
+  vertical-align: middle
+  width: calc(100% - 18px - 18px - 18px)
+
+  &.readOnly
+    width: calc(100% - 18px - 18px)
+
+.selections
+  .noSelections
+    color: #999
+    font-style: italic
+    padding: 5px 10px

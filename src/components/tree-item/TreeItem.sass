@@ -1,0 +1,112 @@
+@import '../../styles/Variables.sass'
+
+.actions
+  display: none
+
+  // &.showActions
+  //   display: inline-block !important
+
+.changes
+  background-color: #3c3d44
+
+.expanded
+  .arrow
+    transform: rotate(90deg)
+
+// .item
+//   &:hover:not(.readOnly)
+//     .actions
+//       display: inline-block
+//
+//     .itemKey
+//       width: calc(100% - 18px - 18px - 18px)
+//
+//     .rootItemKey
+//       width: calc(100% - 18px - 18px)
+
+.itemKey
+  display: inline-block
+  height: 25px
+  line-height: 25px
+  text-align: left
+  vertical-align: middle
+  width: calc(100% - 18px)
+
+  &.showActions
+    width: calc(100% - 18px - 18px - 18px)
+
+.itemKeyForm
+  display: inline-block
+  vertical-align: middle
+  width: calc(100% - 18px)
+
+.itemKeyInput
+  background: none
+  border: none
+  display: inline-block
+  height: 25px
+  margin: 0
+  padding: 0
+  width: 100%
+
+.newItem
+  height: 1px !important
+  opacity: 0 !important
+  overflow: hidden
+
+.newItemFocus
+  height: 25px !important
+  opacity: 1 !important
+
+.rootItemKey
+  padding: 0 0 0 5px
+
+  &.showActions
+    width: calc(100% - 18px - 18px)
+
+.selected
+  background-color: #999
+
+  &.focused
+    background-color: $highlight-color
+
+  a
+    color: #000
+
+    &:hover
+      color: #000
+
+.type
+  background-color: #EEE
+  color: #000
+  display: inline-block
+  height: 8px
+  font-size: 8px
+  line-height: 8px
+  margin: 0 5px
+  text-align: center
+  width: 8px
+
+  &.array
+    background-color: #cccc33
+
+  &.boolean
+    background-color: #cc3333
+
+  &.null
+    background-color: #666
+
+  &.number
+    background-color: #cc3399
+
+  &.object
+    background-color: #ff9933
+
+  &.refernce
+    background-color: #3399ff
+
+  &.string
+    background-color: #66cc66
+
+  &:hover
+    color: #000

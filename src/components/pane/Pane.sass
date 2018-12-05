@@ -1,0 +1,30 @@
+.content
+  height: calc(100% - 76px)
+  left: 150px
+  overflow: auto
+  position: absolute
+  width: calc(100% - 150px)
+
+  &.fullScreen
+    left: 0
+    width: 100%
+
+.pane
+  border-right-style: solid
+  border-right-width: 1px
+  height: 100%
+  left: 0
+  position: fixed
+  top: 25px
+  width: 50%
+
+  @media (max-width: 800px)
+    width: 100%
+
+.sidebar
+  border-right-style: solid
+  border-right-width: 1px
+  height: calc(100% - 76px)
+  overflow: auto
+  position: absolute
+  width: 150px

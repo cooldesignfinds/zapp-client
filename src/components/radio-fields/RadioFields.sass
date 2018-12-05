@@ -1,0 +1,47 @@
+.field
+  padding: 0 0 20px 0
+
+.label
+  cursor: pointer
+  display: inline-block
+  padding: 0 10px
+  vertical-align: middle
+
+.option
+  display: inline-block
+  margin: 0
+  width: 50%
+
+.options
+  list-style: none
+  margin: 0
+  padding: 0
+
+.input
+  display: none
+
+.radio
+  display: inline-block
+  text-align: left
+
+  &:focus
+    color: #FFF
+    opacity: 1
+    outline: none
+
+  span
+    border: 1px #CCC solid
+    border-radius: 50%
+    display: inline-block
+    height: 24px
+    vertical-align: middle
+    width: 24px
+
+  &:hover
+    span
+      border: 1px #999 solid
+
+  &.checked
+    span
+      background-color: #ffcc33
+      border: 1px #ffcc33 solid

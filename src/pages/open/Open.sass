@@ -1,0 +1,135 @@
+@import '../../styles/Variables.sass'
+
+.author
+  color: #666
+  display: block
+  font-size: 10px
+
+.button
+  background: none
+  border: 1px #222 solid
+  border-bottom-left-radius: 20px
+  border-bottom-right-radius: 20px
+  color: #EEE
+  padding: 50px 20px
+  text-align: center
+  transition: background-color .5s
+  width: 100%
+
+  &:hover
+    background-color: $highlight-color
+    color: #FFF
+
+.content
+  margin: 0 auto
+  max-width: 1000px
+  padding: 0 25px
+  width: 100%
+
+  &.only
+    float: none
+    padding: 0
+    width: 100%
+
+  @media (max-width: 800px)
+    float: none
+    width: 100%
+
+.createButton
+  background: none
+  border: 1px #222 solid
+  border-top-left-radius: 20px
+  border-top-right-radius: 20px
+  color: #EEE
+  padding: 50px 20px
+  text-align: center
+  transition: background-color .5s
+  width: 100%
+
+  &:hover
+    background-color: $highlight-color
+    color: #FFF
+
+.guest
+  margin: 0 auto
+  max-width: 500px
+  padding: 0 25px
+
+.name
+  display: block
+  font-size: 12px
+  margin: 10px 0 0 0
+  vertical-align: middle
+
+.open
+  height: 100%
+  left: 0
+  overflow: auto
+  position: fixed
+  top: 0
+  width: 100%
+  -webkit-overflow-scrolling: touch
+
+  h2
+    margin: 0
+    padding: 100px 0 40px 0
+    text-align: center
+
+  h3
+    float: left
+    margin: 0
+    padding: 0
+
+  h4
+    color: #999
+    float: right
+    font-style: italic
+    margin: 15px 0 0 0
+    padding: 0 0 10px 0
+
+  h5
+    font-size: 20px
+    font-style: italic
+    padding: 40px 20px 0 20px
+    text-align: center
+
+  hr
+    border: none
+    background-color: #000
+    clear: both
+    height: 2px
+    margin: 0 0 10px 0
+    width: 100px
+
+.empty
+  text-align: center
+
+.generator
+  color: #999
+  display: inline-block
+  margin: 0
+  padding: 0
+  text-align: center
+  width: 12.5%
+
+  a
+    display: block
+    color: #8f9085
+    font-size: 14px
+    padding: 25px 0
+
+    &:hover
+      .icon
+        transform: scale(1.2)
+
+.generators
+  list-style: none
+  margin: 0
+  overflow: scroll
+  padding: 0 0 40px 0
+
+.icon
+  background-size: 60% auto
+  border-radius: 50%
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5)
+  transition: transform .5s

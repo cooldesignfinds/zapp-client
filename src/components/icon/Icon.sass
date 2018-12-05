@@ -1,0 +1,24 @@
+.icon
+  background-color: transparent
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: contain
+  display: inline-block
+  vertical-align: middle
+
+.iconButton
+  text-align: center
+  transition: transform .2s
+
+  &:active
+    color: transparent
+
+  &:hover
+    color: transparent
+
+  &[disabled]
+    cursor: default
+    opacity: .25
+
+  &.rotated
+    transform: rotate(90deg)

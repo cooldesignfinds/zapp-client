@@ -1,0 +1,31 @@
+.close
+  float: right
+
+.modal
+  background-color: rgba(0, 0, 0, .75)
+  height: 100%
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 99999999999
+
+  h1
+    font-size: 12px
+
+  p
+    font-size: 18px
+
+  .content
+    background-color: #FFF
+    left: 50%
+    margin-left: -250px
+    position: absolute
+    padding: 20px
+    top: 100px
+    width: 500px
+
+    @media (max-width: 767px)
+      left: 0
+      margin-left: 0
+      width: 100%

@@ -1,0 +1,116 @@
+@import '../../styles/Variables.sass'
+
+.caret
+  width: 0
+  height: 0
+  border-left: 5px solid transparent
+  border-right: 5px solid transparent
+  border-bottom: 5px solid #FFF
+  border-top: none
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 9999999999999
+
+  &.above
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    border-bottom: none
+    border-top: 5px solid #FFF
+
+.empty
+  color: #999
+  font-style: italic
+  padding: 5px
+
+.selected
+  background-color: $highlight-color
+
+.selector
+  background-color: #FFF
+  border-radius: 2px
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .5)
+  overflow: scroll
+  position: fixed
+  left: 100px
+  max-height: 200px
+  top: 100px
+  z-index: 999999999999
+
+  a
+    color: #666
+    display: block
+    padding: 5px
+
+    &:hover
+      background-color: #EEE
+      color: #000
+
+  button
+    color: #666
+    padding: 5px
+    overflow: hidden
+    text-align: left
+    text-overflow: ellipsis
+    white-space: nowrap
+
+    &:hover
+      background-color: #EEE
+      color: #000
+
+    &[disabled]
+      background-color: transparent
+      color: #999
+      cursor: default
+      font-style: italic
+
+  form
+    padding: 5px
+
+  h6
+    border-bottom: 1px #EEE dotted
+    font-weight: bold
+    margin: 0
+    padding: 5px 10px
+
+  input
+    background-color: #FFF
+    border: none
+    border-bottom: 1px #CCC solid
+    display: inline-block
+    width: calc(100% - 21px)
+
+    &:focus
+      color: #000
+
+    &::placeholder
+      color: #CCC
+
+  li
+    margin: 0
+
+    &:last-of-type
+      border-bottom: none
+
+    &.divider
+      border-bottom: 1px #EEE solid
+
+    &.selected
+      button
+        background-color: $highlight-color
+        color: #FFF
+
+  span
+    padding: 0 0 0 5px
+    vertical-align: middle
+
+  ul
+    list-style: none
+    margin: 0
+    padding: 0
+
+.selectorDescription
+  font-style: italic
+
+.tutorialMode
+  pointer-events: none

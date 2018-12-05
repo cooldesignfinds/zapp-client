@@ -1,0 +1,76 @@
+@import '../../styles/Variables.sass'
+
+.button
+  background-color: #FFF
+  border-radius: 2px
+  cursor: pointer
+  display: inline-block
+  padding: 5px
+  margin-left: 5px
+  width: 50px
+
+  &:first-of-type
+    margin-left: 0
+
+  &:focus, &:hover
+    color: #000
+
+.buttons
+  float: right
+  padding: 5px
+  text-align: center
+
+.caret
+  width: 0
+  height: 0
+  border-left: 5px solid transparent
+  border-right: 5px solid transparent
+  border-bottom: 5px solid #33ccff
+  border-top: none
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 9999999999999
+
+  &.above
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    border-bottom: none
+    border-top: 5px solid #33ccff
+
+.content
+  padding: 5px 5px 0 5px
+
+.hint
+  background-color: #33ccff
+  border-radius: 2px
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .5)
+  color: #000
+  overflow: scroll
+  position: fixed
+  left: 100px
+  max-height: 200px
+  top: 100px
+  z-index: 99999999999999
+
+.empty
+  color: #999
+  font-style: italic
+  padding: 5px
+
+.footer
+  overflow: auto
+
+.message
+  color: #0066cc
+  float: left
+  padding: 10px 5px 0 5px
+
+.selected
+  background-color: $highlight-color
+
+.title
+  border-bottom: 1px #0066cc dotted
+  font-size: 16px
+  margin: 0
+  padding: 5px

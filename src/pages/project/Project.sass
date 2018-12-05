@@ -1,0 +1,41 @@
+.buttons
+  float: right
+
+.code
+  height: 100%
+  left: 50%
+  position: fixed
+  top: 25px
+  width: 50%
+
+  @media (max-width: 800px)
+    display: none
+
+.currentPath
+  background-image: url(images/arrow.svg)
+  background-position: center left 5px
+  background-repeat: no-repeat
+  background-size: auto 8px
+  border-bottom: 1px #000 solid
+  padding: 5px 5px 5px 18px
+  text-align: left
+
+.init
+  margin: 0 auto
+  text-align: center
+  width: 400px
+
+  h1
+    font-size: 24px
+    padding: 100px 0 0 0
+
+.pane
+  @media (max-width: 767px)
+    display: none
+
+    &:first-of-type
+      display: block
+      width: 100% !important
+
+.projectName
+  font-weight: bold

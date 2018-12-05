@@ -1,0 +1,67 @@
+@import '../../styles/Variables.sass'
+
+.newItem
+  height: 1px !important
+  opacity: 0 !important
+  overflow: hidden
+
+.newItemFocus
+  height: 25px !important
+  opacity: 1 !important
+
+.type
+  background-color: #EEE
+  color: #000
+  display: inline-block
+  height: 8px
+  font-size: 8px
+  line-height: 8px
+  margin: 0 5px
+  text-align: center
+  width: 8px
+
+  &.array
+    background-color: #cccc33
+
+  &.boolean
+    background-color: #cc3333
+
+  &.link
+    background-color: #66ccff
+
+  &.null
+    background-color: #666
+
+  &.number
+    background-color: #cc3399
+
+  &.object
+    background-color: #ff9933
+
+  &.string
+    background-color: #66cc66
+
+  &:hover
+    color: #000
+
+.value
+  &.array
+    color: #cccc33
+
+  &.boolean
+    color: #cc3333
+
+  &.link
+    color: #66ccff
+
+  &.null
+    color: #666
+
+  &.number
+    color: #cc3399
+
+  &.object
+    color: #ff9933
+
+  &.string
+    color: #66cc66

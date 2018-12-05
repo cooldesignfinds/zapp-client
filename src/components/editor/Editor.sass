@@ -1,0 +1,175 @@
+@import '../../styles/Variables.sass'
+
+.arrow
+  background-image: url(images/arrow.svg)
+  background-repeat: no-repeat
+  display: inline-block
+  height: 8px
+  margin: 0 5px 0 0
+  transition: transform .25s
+  width: 8px
+
+.drag
+  background-color: $highlight-color
+  height: 2px
+  width: 100%
+
+.editor
+  button
+    display: inline-block
+
+  form
+    button
+      &[type=submit]
+        left: -1px
+        height: 1px
+        position: absolute
+        top: -1px
+        visibility: hidden
+        width: 1px
+
+  input
+    background: none
+    border: none
+    border-bottom: 1px transparent solid
+    color: #999
+    display: inline-block
+    height: 25px
+    opacity: .75
+    padding: 0
+    width: 50%
+
+    &.array
+      color: #cccc33
+
+    &.boolean
+      color: #cc3333
+
+    &.null
+      color: #666
+
+    &.number
+      color: #cc3399
+
+    &.object
+      color: #ff9933
+
+    // &.reference
+    //   color: #3399ff
+
+    &.string
+      color: #66cc66
+
+    &:focus
+      border-bottom: 1px $highlight-color solid
+      cursor: text
+      opacity: 1
+
+    &:hover
+      opacity: 1
+
+    &[disabled]
+      opacity: .75 !important
+      pointer-events: none !important
+
+  li
+    margin: 0
+    padding: 0
+
+  ul
+    list-style: none
+    margin: 0
+    padding: 0
+
+.expanded
+  .arrow
+    transform: rotate(90deg)
+
+.itemButton
+  text-align: left
+
+.key
+  display: inline-block
+  height: 25px
+  overflow: hidden
+  padding: 5px 0
+  text-align: left
+  text-overflow: ellipsis
+  white-space: nowrap
+
+  &.array
+    color: #666
+    cursor: default
+
+.selected
+  background-color: #EEE
+
+.selectorDescription
+  color: #999
+
+.selectorName
+  display: inline-block
+  width: 80px
+
+.type
+  background-color: #EEE
+  color: #000
+  display: inline-block
+  height: 8px
+  font-size: 8px
+  line-height: 8px
+  margin: 0 5px
+  text-align: center
+  width: 8px
+
+  &.array
+    background-color: #cccc33
+
+  &.boolean
+    background-color: #cc3333
+
+  &.null
+    background-color: #666
+
+  &.number
+    background-color: #cc3399
+
+  &.object
+    background-color: #ff9933
+
+  &.string
+    background-color: #66cc66
+
+  &:hover
+    color: #000
+
+.value
+  display: inline-block
+  height: 25px
+  overflow: hidden
+  padding: 5px 0
+  text-align: left
+  text-overflow: ellipsis
+  vertical-align: top
+  white-space: nowrap
+
+  &.array
+    color: #cccc33
+
+  &.boolean
+    color: #cc3333
+
+  &.null
+    color: #666
+
+  &.number
+    color: #cc3399
+
+  &.object
+    color: #ff9933
+
+  &.string
+    color: #66cc66
+
+  &:hover
+    border-bottom: 1px #000 solid
