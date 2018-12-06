@@ -219,13 +219,13 @@ class EditorItem extends Component {
     this.props.hideSelector();
 
     if (this.props.isNew) {
-      if (type === 'object') {
+      if (type === 'array' || type === 'object') {
         this.setState({
           changeKey: '',
           changeMode: '',
           changeValue: ''
         });
-        this.commitChanges(key, {}, type);
+        this.commitChanges(key, type === 'array' ? [] : {}, type);
 
         const newItemPath = getPath(this.props.itemPathParts.slice(0, -1).concat(key));
 
