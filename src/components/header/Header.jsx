@@ -326,13 +326,9 @@ class Header extends Component {
                         backgroundColor: this.props.projectColor
                       }}
                       type={
-                        this.props.tutorialMode
-                          ? this.props.projectIcon
-                          : (
-                            this.props.projectIcon.length > 0
-                              ? `https://cdn.zappjs.com/icons/${this.props.projectIcon}.svg`
-                              : 'images/icons/logo.png'
-                          )
+                        this.props.projectIcon.length > 0
+                          ? `https://cdn.zappjs.com/icons/${this.props.projectIcon}.svg`
+                          : 'images/icons/logo.png'
                       }
                     />
                   </li>
@@ -524,7 +520,6 @@ Header.defaultProps = {
   projectColor: '',
   projectConfiguration: 'default',
   projectConfigurations: [],
-  tutorialMode: false,
   versions: [],
   // dispatch props
   redo: () => {},
@@ -558,7 +553,6 @@ Header.propTypes = {
   projectColor: PropTypes.string,
   projectConfiguration: PropTypes.string,
   projectConfigurations: PropTypes.array,
-  tutorialMode: PropTypes.bool,
   versions: PropTypes.array,
   // dispatch props
   redo: PropTypes.func,
@@ -586,7 +580,6 @@ function mapStateToProps(state) {
     projectVersion: state.project.version,
     selectMenuItem: state.menu.selectedItem,
     teamName: state.team.name,
-    tutorialMode: state.tutorial.show,
     username: state.user.username,
     versions: state.project.versions
   };

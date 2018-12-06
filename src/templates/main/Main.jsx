@@ -68,7 +68,7 @@ class MainTemplate extends Component {
     if (isDesktop()) {
       return;
     }
-    if (this.props.hasUnsavedChanges && !this.props.tutorialMode) {
+    if (this.props.hasUnsavedChanges) {
       const e = event || window.event;
       const message = 'You have unsaved changes that will be lost if you continue.';
       if (e) {
@@ -115,10 +115,6 @@ class MainTemplate extends Component {
   }
 
   handleKeyDown(event) {
-    if (this.props.tutorialMode) {
-      return;
-    }
-
     const shortcutKey = getShortcutKey(event.keyCode);
 
     const shortcuts = {
@@ -222,12 +218,6 @@ class MainTemplate extends Component {
             <HintWrapper />
             <SelectorWrapper />
             <Shortcuts />
-            <If condition={this.props.tutorialMode}>
-              <a className={styles.tutorialMode} href="/">
-                <span>Exit Tutorial</span>
-                <Icon size={12} type="close-white" />
-              </a>
-            </If>
           </div>
         )}
       </ThemeContext.Consumer>
@@ -255,7 +245,6 @@ MainTemplate.defaultProps = {
   selectPaneTreeItem: () => {},
   showTerminal: () => {},
   togglePaneTree: () => {},
-  tutorialMode: '',
   undo: () => {}
 };
 
@@ -283,7 +272,6 @@ MainTemplate.propTypes = {
   selectPaneTreeItem: PropTypes.func,
   showTerminal: PropTypes.func,
   togglePaneTree: PropTypes.func,
-  tutorialMode: PropTypes.bool,
   undo: PropTypes.func
 };
 
@@ -291,8 +279,7 @@ function mapStateToProps(state) {
   return {
     focusedPane: state.pane.focusedItem,
     hasUnsavedChanges: state.project.hasUnsavedChanges,
-    isLoading: !state.user.isComplete,
-    tutorialMode: state.tutorial.show
+    isLoading: !state.user.isComplete
   };
 }
 

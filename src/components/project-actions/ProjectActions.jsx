@@ -12,7 +12,6 @@ import openTerminal from '../../actions/openTerminal';
 import saveProject from '../../actions/saveProject';
 import showSelector from '../../actions/showSelector';
 import showTerminal from '../../actions/showTerminal';
-import startTutorial from '../../actions/startTutorial';
 
 import IconButton from '../../components/icon-button/IconButton';
 
@@ -44,68 +43,10 @@ class ProjectActions extends Component {
       }
     }
   }
-  handleTutorial(name) {
-    this.props.startTutorial({
-      name,
-      steps: [
-        {
-          selector: '#add-button',
-          content: 'First, click the add button.'
-        },
-        {
-          selector: '#import-button',
-          content: 'First, click the add button.'
-        }
-      ]
-    });
-  }
-  toggleHelpMenu() {
-    this.props.showSelector({
-      target: this.helpButton,
-      name: 'open',
-      title: 'Tutorials',
-      options: [
-        {
-          iconType: 'home',
-          onSelect: () => this.handleTutorial('createNewGenerator'),
-          text: 'Create New Generator',
-          value: 'new-generator'
-        }
-      ]
-    });
-  }
   render() {
     const folder = getWorkspaceDir(`${this.props.projectAuthorUsername}/${this.props.projectName}/${this.props.projectVersion}/${this.props.projectConfiguration}`);
     return (
       <Fragment>
-        <If condition={false}>
-          <li className={styles.folder}>
-            <IconButton
-              buttonRef={(ref) => { this.helpButton = ref; }}
-              id="help-button"
-              onClick={() => this.toggleHelpMenu()}
-              paddingHeight={12}
-              paddingWidth={12}
-              size={12}
-              title="Help"
-              type="help-gray"
-            />
-          </li>
-        </If>
-        <If condition={false}>
-          <li className={styles.folder}>
-            <IconButton
-              id="console-button"
-              disabled={!isDesktop()}
-              onClick={() => this.handleTerminal()}
-              paddingHeight={12}
-              paddingWidth={12}
-              size={12}
-              title={!isDesktop() ? 'Only available on desktop version of ZappJS' : 'Terminal (CMD-T)'}
-              type="terminal-gray"
-            />
-          </li>
-        </If>
         <li className={styles.folder}>
           <IconButton
             id="folder-button"
@@ -212,8 +153,7 @@ ProjectActions.defaultProps = {
   openTerminal: () => {},
   saveProject: () => {},
   showSelector: () => {},
-  showTerminal: () => {},
-  startTutorial: () => {}
+  showTerminal: () => {}
 };
 
 ProjectActions.propTypes = {
@@ -248,8 +188,7 @@ ProjectActions.propTypes = {
   openTerminal: PropTypes.func,
   saveProject: PropTypes.func,
   showSelector: PropTypes.func,
-  showTerminal: PropTypes.func,
-  startTutorial: PropTypes.func
+  showTerminal: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -305,9 +244,6 @@ function mapDispatchToProps(dispatch) {
     },
     showTerminal: (opts) => {
       dispatch(showTerminal(opts));
-    },
-    startTutorial: (opts) => {
-      dispatch(startTutorial(opts));
     }
   };
 }

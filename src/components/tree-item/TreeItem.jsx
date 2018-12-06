@@ -16,10 +16,8 @@ import resetNewTreeItem from '../../actions/resetNewTreeItem';
 import selectPaneTreeItem from '../../actions/selectPaneTreeItem';
 import showSelector from '../../actions/showSelector';
 import sortItem from '../../actions/sortItem';
-import tutorialNext from '../../actions/tutorialNext';
 import updateItem from '../../actions/updateItem';
 
-import Button from '../../components/button/Button';
 import IconButton from '../../components/icon-button/IconButton';
 
 import getItemPath from '../../lib/getItemPath';
@@ -286,16 +284,7 @@ class TreeItem extends Component {
     this.props.selectPaneTreeItem();
   }
   handleShortcuts(event) {
-    if (event.keyCode === 13) {
-      if (this.props.tutorialMode) {
-        if (!event.shiftKey) {
-          this.props.tutorialNext({
-            response: event.target.value
-          });
-        }
-        return false;
-      }
-    } else if (event.keyCode === 27) {
+    if (event.keyCode === 27) {
       this.props.resetNewTreeItem();
       this.props.hideSelector();
     }
@@ -451,7 +440,6 @@ class TreeItem extends Component {
                   ? styles.showActions
                   : null
               )}
-              disabled={this.props.tutorialMode}
               id={`pane-${this.props.paneIndex}_tree-item_${this.props.itemPath}`}
               onClick={() => this.handleSelect()}
               onContextMenu={event => this.handleMore(event)}
@@ -557,7 +545,6 @@ TreeItem.defaultProps = {
   schemas: OrderedMap(),
   selectorData: {},
   showNew: false,
-  tutorialMode: false,
 
   collapsePaneTreeItem: () => {},
   deleteItem: () => {},
@@ -569,7 +556,6 @@ TreeItem.defaultProps = {
   selectPaneTreeItem: () => {},
   showSelector: () => {},
   sortItem: () => {},
-  tutorialNext: () => {},
   updateItem: () => {}
 };
 
@@ -600,7 +586,6 @@ TreeItem.propTypes = {
   schemas: PropTypes.instanceOf(OrderedMap),
   selectorData: PropTypes.object,
   showNew: PropTypes.bool,
-  tutorialMode: PropTypes.bool,
 
   collapsePaneTreeItem: PropTypes.func,
   deleteItem: PropTypes.func,
@@ -612,7 +597,6 @@ TreeItem.propTypes = {
   selectPaneTreeItem: PropTypes.func,
   showSelector: PropTypes.func,
   sortItem: PropTypes.func,
-  tutorialNext: PropTypes.func,
   updateItem: PropTypes.func
 };
 
@@ -660,9 +644,6 @@ function mapDispatchToProps(dispatch, props) {
         paneType: props.paneType,
         ...opts
       }));
-    },
-    tutorialNext: (opts) => {
-      dispatch(tutorialNext(opts));
     },
     updateItem: ({ itemPathParts, itemValue, oldItemPathParts }) => {
       dispatch(

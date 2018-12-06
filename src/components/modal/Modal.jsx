@@ -24,15 +24,13 @@ class Modal extends Component {
       <If condition={this.props.currentModal !== ''}>
         <div className={styles.modal}>
           <div className={styles.content}>
-            <If condition={!this.props.tutorialMode}>
-              <IconButton
-                className={styles.close}
-                onClick={() => this.handleClose()}
-                size={16}
-                title="Close"
-                type="close"
-              />
-            </If>
+            <IconButton
+              className={styles.close}
+              onClick={() => this.handleClose()}
+              size={16}
+              title="Close"
+              type="close"
+            />
             <Choose>
               <When condition={this.props.currentModal === 'changeIcon'}>
                 <ChangeIconForm />
@@ -66,8 +64,7 @@ class Modal extends Component {
 Modal.defaultProps = {
   content: '',
   currentModal: '',
-  hideModal: () => {},
-  tutorialMode: false
+  hideModal: () => {}
 };
 
 Modal.propTypes = {
@@ -77,15 +74,13 @@ Modal.propTypes = {
     PropTypes.string
   ]),
   currentModal: PropTypes.string,
-  hideModal: PropTypes.func,
-  tutorialMode: PropTypes.bool
+  hideModal: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
     content: state.modal.content,
-    currentModal: state.modal.current,
-    tutorialMode: state.tutorial.show
+    currentModal: state.modal.current
   };
 }
 

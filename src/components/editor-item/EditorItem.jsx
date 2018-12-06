@@ -15,14 +15,12 @@ import selectPaneTreeItem from '../../actions/selectPaneTreeItem';
 import showSelector from '../../actions/showSelector';
 import showShortcuts from '../../actions/showShortcuts';
 import sortItem from '../../actions/sortItem';
-import tutorialNext from '../../actions/tutorialNext';
 import updateItem from '../../actions/updateItem';
 import updateNewItemPath from '../../actions/updateNewItemPath';
 
 import Code from '../../components/code/Code';
 import IconButton from '../../components/icon-button/IconButton';
 import SelectField from '../../components/select-field/SelectField';
-import SelectFieldOption from '../../components/select-field-option/SelectFieldOption';
 
 import CodeItem from '../../lib/CodeItem';
 import formatPaneName from '../../lib/formatPaneName';
@@ -393,9 +391,6 @@ class EditorItem extends Component {
           );
         },
         enter: () => {
-          if (this.props.tutorialMode) {
-            return false;
-          }
           if (!this.props.isNew || event.target.name === 'value') {
             this.setState({
               isChanging: false
@@ -514,18 +509,6 @@ class EditorItem extends Component {
           }
         },
         tab: () => {
-          if (this.props.tutorialMode) {
-            if (!event.shiftKey) {
-              this.props.tutorialNext({
-                response: event.target.value
-              });
-              this.setState({
-                isChanging: false
-              });
-            }
-            return false;
-          }
-
           if (
             (
               (event.target.name === 'key' && event.shiftKey)
@@ -1278,8 +1261,7 @@ class EditorItem extends Component {
             autoCorrect="off"
             autoCapitalize="off"
             disabled={
-              (this.props.tutorialMode && !this.props.tutorialEnabledElements.includes(keyId))
-                || parentItemType === 'array' || this.props.readOnly
+              parentItemType === 'array' || this.props.readOnly
             }
             id={keyId}
             name="key"
@@ -1313,8 +1295,7 @@ class EditorItem extends Component {
                 styles[currentItemType]
               )}
               disabled={
-                (this.props.tutorialMode && !this.props.tutorialEnabledElements.includes(valueId))
-                  || this.props.readOnly
+                this.props.readOnly
               }
               id={valueId}
               name="value"
@@ -1346,8 +1327,7 @@ class EditorItem extends Component {
                 styles[currentItemType]
               )}
               disabled={
-                (this.props.tutorialMode && !this.props.tutorialEnabledElements.includes(modeId))
-                  || parentItemType === 'array' || this.props.readOnly
+                parentItemType === 'array' || this.props.readOnly
               }
               id={modeId}
               name="mode"
@@ -1446,9 +1426,6 @@ EditorItem.defaultProps = {
   parentItemType: '',
   readOnly: false,
   schemas: OrderedMap(),
-  tutorialEnabledElements: [],
-  tutorialMode: false,
-  tutorialNext: () => {},
   valueRef: () => {},
   // dispatch
   collapsePaneEditorItem: () => {},
@@ -1502,9 +1479,6 @@ EditorItem.propTypes = {
   resetNewItemPath: PropTypes.func,
   schemas: PropTypes.instanceOf(OrderedMap),
   showNew: PropTypes.bool,
-  tutorialEnabledElements: PropTypes.array,
-  tutorialMode: PropTypes.bool,
-  tutorialNext: PropTypes.func,
   valueRef: PropTypes.func,
   // dispatch
   collapsePaneEditorItem: PropTypes.func,
@@ -1575,9 +1549,6 @@ function mapDispatchToProps(dispatch, props) {
         paneType: props.paneType,
         ...opts
       }));
-    },
-    tutorialNext: (opts) => {
-      dispatch(tutorialNext(opts));
     },
     updateItem: (opts) => {
       // console.log('updateItem');

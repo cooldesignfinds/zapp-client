@@ -1,23 +1,15 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import tutorialNext from '../../actions/tutorialNext';
 
 import styles from './IconButton.sass';
 
 class IconButton extends Component {
   handleButtonClick(e) {
-    if (this.props.tutorialMode) {
-      this.props.tutorialNext();
-    }
     this.props.onClick(e);
   }
-  handleLinkClick() {
-    if (this.props.tutorialMode) {
-      this.props.tutorialNext();
-    }
+  handleLinkClick(e) {
+    this.props.onClick(e);
   }
   render() {
     const imageUrl = /^((http|https):)?\/\//.test(this.props.type)
@@ -25,16 +17,13 @@ class IconButton extends Component {
       || /\.png/.test(this.props.type)
       ? this.props.type
       : `images/icons/${this.props.type}.svg`;
-    const tutorialMode = this.props.tutorialMode
-      && !this.props.tutorialEnabledElements.includes(this.props.id);
     if (this.props.href) {
       return (
         <a
           className={classNames(
             styles.iconButton,
             this.props.rotated ? styles.rotated : null,
-            this.props.className,
-            tutorialMode ? styles.tutorialMode : null
+            this.props.className
           )}
           disabled={this.props.disabled}
           href={this.props.href}
@@ -72,8 +61,7 @@ class IconButton extends Component {
         className={classNames(
           styles.iconButton,
           this.props.rotated ? styles.rotated : null,
-          this.props.className,
-          tutorialMode ? styles.tutorialMode : null
+          this.props.className
         )}
         disabled={this.props.disabled}
         id={this.props.id}
@@ -124,12 +112,7 @@ IconButton.defaultProps = {
   tabIndex: '',
   target: '',
   title: '',
-  type: '',
-  // state props
-  tutorialEnabledElements: [],
-  tutorialMode: false,
-  // dispatch props
-  tutorialNext: () => {}
+  type: ''
 };
 
 IconButton.propTypes = {
@@ -157,27 +140,7 @@ IconButton.propTypes = {
   ]),
   target: PropTypes.string,
   title: PropTypes.string,
-  type: PropTypes.string,
-  // state props
-  tutorialEnabledElements: PropTypes.array,
-  tutorialMode: PropTypes.bool,
-  // dispatch props
-  tutorialNext: PropTypes.func
+  type: PropTypes.string
 };
 
-function mapStateToProps(state) {
-  return {
-    tutorialEnabledElements: state.tutorial.enabledElements,
-    tutorialMode: state.tutorial.show
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    tutorialNext: () => {
-      dispatch(tutorialNext());
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(IconButton);
+export default IconButton;

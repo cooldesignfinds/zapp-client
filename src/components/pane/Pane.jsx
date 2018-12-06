@@ -41,7 +41,7 @@ class Pane extends Component {
       : (itemType === 'code' ? items.value : '');
     const iconType = itemMode || 'file';
     const readOnly = this.props.type === 'code'
-      || (this.props.projectAuthorUsername !== this.props.username && !this.props.tutorialMode)
+      || (this.props.projectAuthorUsername !== this.props.username)
       || this.props.projectVersion !== 'latest';
     return (
       <ThemeContext.Consumer>
@@ -145,7 +145,6 @@ Pane.defaultProps = {
   selectedTreeItem: '',
   showSidebar: false,
   totalPaneCount: 0,
-  tutorialMode: false,
   username: '',
   // dispatch props
   focusPane: () => {}
@@ -167,7 +166,6 @@ Pane.propTypes = {
   selectedTreeItem: PropTypes.string,
   showSidebar: PropTypes.bool,
   totalPaneCount: PropTypes.number,
-  tutorialMode: PropTypes.bool,
   username: PropTypes.string,
   // dispatch props
   focusPane: PropTypes.func
@@ -182,7 +180,6 @@ function mapStateToProps(state, props) {
     selectedTreeItem: pane.tree.selectedItem,
     showSidebar: pane.tree.open,
     totalPaneCount: state.pane.items.length,
-    tutorialMode: state.tutorial.show,
     username: state.user.username
   };
 }

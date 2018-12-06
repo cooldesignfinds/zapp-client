@@ -13,9 +13,7 @@ import getItemPathParts from '../../lib/getItemPathParts';
 import getItemType from '../../lib/getItemType';
 import getItemPath from '../../lib/getItemPath';
 import getMode from '../../lib/getMode';
-import getSchemaProperties from '../../lib/getSchemaProperties';
 
-import selectorStyles from '../selector/Selector.sass';
 import styles from './Tree.sass';
 
 class Tree extends Component {
@@ -165,7 +163,6 @@ class Tree extends Component {
                 schemas={this.props.schemas}
                 selectorData={this.props.selectorData}
                 showNew={this.props.newItemPath === itemPath}
-                tutorialMode={this.props.tutorialMode}
               >
                 <If condition={isExpanded}>
                   {this.renderItems(itemValue, items, itemPathParts)}
@@ -210,7 +207,6 @@ class Tree extends Component {
               schemas={this.props.schemas}
               selectorData={this.props.selectorData}
               showNew={this.props.newItemPath === '/'}
-              tutorialMode={this.props.tutorialMode}
             >
               {this.renderItems(this.props.items)}
             </TreeItem>
@@ -241,7 +237,6 @@ Tree.defaultProps = {
   newItemValue: '',
   selectedItem: '',
   selectorData: {},
-  tutorialMode: false,
   // dispatch props
   moveItem: () => {}
 };
@@ -267,7 +262,6 @@ Tree.propTypes = {
   newItemValue: PropTypes.string,
   selectedItem: PropTypes.string,
   selectorData: PropTypes.object,
-  tutorialMode: PropTypes.bool,
   // dispatch props
   moveItem: () => {}
 };
@@ -284,8 +278,7 @@ function mapStateToProps(state = {}, props) {
     projectId: state.project.id,
     projectName: state.project.name,
     selectedItem: pane.tree.selectedItem,
-    selectorData: state.selector.data,
-    tutorialMode: state.tutorial.show
+    selectorData: state.selector.data
   };
 }
 

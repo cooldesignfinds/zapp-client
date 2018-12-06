@@ -54,9 +54,6 @@ class Editor extends Component {
     return this.props.leftOffset + val;
   }
   handleDragEnd() {
-    if (this.props.tutorialMode) {
-      return;
-    }
     this.setState({
       dragFromId: '',
       dragFromPath: [],
@@ -65,9 +62,6 @@ class Editor extends Component {
     });
   }
   handleDragOver(event, itemPath) {
-    if (this.props.tutorialMode) {
-      return;
-    }
     event.preventDefault();
     event.stopPropagation();
     let dragDirection = 'below';
@@ -82,9 +76,6 @@ class Editor extends Component {
     }
   }
   handleDragStart(event, itemPath, itemPathParts) {
-    if (this.props.tutorialMode) {
-      return;
-    }
     event.stopPropagation();
     this.setState({
       dragFromId: itemPath,
@@ -92,9 +83,6 @@ class Editor extends Component {
     });
   }
   handleDrop(event, itemPath, itemPathParts) {
-    if (this.props.tutorialMode) {
-      return;
-    }
     event.stopPropagation();
     this.props.moveItem({
       srcItemPathParts: getItemPathParts(this.state.dragFromId),
@@ -263,8 +251,6 @@ class Editor extends Component {
                 modeRef={(ref) => { this.modeRefs[itemPath] = ref; }}
                 readOnly={this.props.readOnly}
                 schemas={this.props.schemas}
-                tutorialEnabledElements={this.props.tutorialEnabledElements}
-                tutorialMode={this.props.tutorialMode}
                 valueRef={(ref) => { this.valueRefs[itemPath] = ref; }}
               >
                 <If condition={(itemType === 'array' || itemType === 'object') && isExpanded}>
@@ -312,8 +298,6 @@ Editor.defaultProps = {
   rootItemPath: '',
   rootItemPathParts: [],
   schemas: OrderedMap(),
-  tutorialEnabledElements: [],
-  tutorialMode: false,
   // state props
   expandedItems: [],
   // dispatch props
@@ -339,8 +323,6 @@ Editor.propTypes = {
   rootItemPath: PropTypes.string,
   rootItemPathParts: PropTypes.array,
   schemas: PropTypes.instanceOf(OrderedMap),
-  tutorialEnabledElements: PropTypes.array,
-  tutorialMode: PropTypes.bool,
   // state props
   expandedItems: PropTypes.array,
   // dispatch props
@@ -353,9 +335,7 @@ function mapStateToProps(state, props) {
   return {
     expandedItems: pane.editor.expandedItems,
     newItemPath: pane.editor.newItemPath,
-    projectId: state.project.id,
-    tutorialEnabledElements: state.tutorial.enabledElements,
-    tutorialMode: state.tutorial.show
+    projectId: state.project.id
   };
 }
 

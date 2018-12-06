@@ -4,7 +4,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import hideSelector from '../../actions/hideSelector';
-import tutorialNext from '../../actions/tutorialNext';
 
 import Button from '../../components/button/Button';
 import Icon from '../../components/icon/Icon';
@@ -41,10 +40,6 @@ class Selector extends Component {
     this.wrapperRef = node;
   }
   handleClickOutside(event) {
-    if (this.props.tutorialMode) {
-      return;
-    }
-
     event.stopPropagation();
     if (
       !this.wrapperRef
@@ -81,10 +76,6 @@ class Selector extends Component {
         return this.handleSelection();
       },
       esc: () => {
-        if (this.props.tutorialMode) {
-          return;
-        }
-
         this.props.hideSelector();
       },
       tab: () => {
@@ -165,19 +156,8 @@ class Selector extends Component {
 
     const option = options[this.state.selectedIndex];
 
-    if (
-      this.props.tutorialMode
-        && !this.props.tutorialEnabledElements.includes(option.id)
-    ) {
-      return false;
-    }
-
     options[this.state.selectedIndex].onSelect();
     this.props.hideSelector();
-
-    if (this.props.tutorialMode) {
-      this.props.tutorialNext();
-    }
 
     return false;
   }
@@ -275,9 +255,6 @@ class Selector extends Component {
                   id={option.id}
                   onMouseDown={(event) => {
                     option.onSelect(event);
-                    if (this.props.tutorialMode) {
-                      this.props.tutorialNext();
-                    }
                   }}
                 >
                   <If condition={option.icon}>
@@ -339,9 +316,6 @@ Selector.defaultProps = {
   target: document.createElement('div'),
   top: 'auto',
   title: '',
-  tutorialEnabledElements: [],
-  tutorialMode: false,
-  tutorialNext: () => {},
   width: 'auto',
   // dispatch props
   hideSelector: () => {}
@@ -362,9 +336,6 @@ Selector.propTypes = {
     PropTypes.number,
     PropTypes.string
   ]),
-  tutorialEnabledElements: PropTypes.array,
-  tutorialMode: PropTypes.bool,
-  tutorialNext: PropTypes.func,
   width: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string
@@ -382,8 +353,6 @@ function mapStateToProps(state) {
     target: state.selector.target,
     title: state.selector.title,
     top: state.selector.top,
-    tutorialEnabledElements: state.tutorial.enabledElements,
-    tutorialMode: state.tutorial.show,
     width: state.selector.width
   };
 }
@@ -392,9 +361,6 @@ function mapDispatchToProps(dispatch) {
   return {
     hideSelector: () => {
       dispatch(hideSelector());
-    },
-    tutorialNext: (opts) => {
-      dispatch(tutorialNext(opts));
     }
   };
 }
