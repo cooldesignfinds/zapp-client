@@ -1,18 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, OrderedMap } from 'immutable';
+import { OrderedMap } from 'immutable';
 
 import generate from '../../actions/generate';
 import loadLocalProject from '../../actions/loadLocalProject';
-import loadProject from '../../actions/loadProject';
-import startTutorial from '../../actions/startTutorial';
 
 import Engines from '../../components/engines/Engines';
 import Loader from '../../components/loader/Loader';
 import Pane from '../../components/pane/Pane';
-
-import getTutorial from '../../lib/getTutorial';
 
 import configsSchema from '../../schemas/configs';
 import enginesSchema from '../../schemas/engines';
@@ -36,35 +32,12 @@ class ProjectPage extends Component {
   constructor(props) {
     super(props);
 
-    let projectUrl = '';
+    const cwd = `/${this.props.router.location.pathname}`;
 
-    if (this.props.router.routes[1].path === 'local') {
-      projectUrl = 'local';
-      this.props.loadLocalProject({
-        cwd: this.props.router.location.query.cwd
-      });
-    } else if (this.props.router.routes[1].path === 'tutorials/:tutorialName') {
-      projectUrl = 'tutorials';
-      const tutorial = getTutorial(this.props.params.tutorialName);
-      this.props.loadUntitled(tutorial.items);
-      this.props.startTutorial(tutorial);
-    } else if (this.props.router.routes[1].path === 'untitled') {
-      projectUrl = 'untitled';
-      this.props.loadUntitled();
-    } else {
-      const version = this.props.params.version || 'latest';
-      const configuration = this.props.params.configuration || 'default';
-      projectUrl = `${this.props.params.user}/${this.props.params.generator}/${version}`;
-      this.props.loadProject({
-        name: this.props.params.generator,
-        user: this.props.params.user,
-        version,
-        configuration
-      }, () => this.handleGenerate());
-    }
+    this.props.loadLocalProject({ cwd });
 
     this.state = {
-      projectUrl
+      projectUrl: cwd
     };
   }
   getRightSection() {
@@ -145,10 +118,7 @@ ProjectPage.defaultProps = {
   userId: '',
   // dispatch props
   generate: () => {},
-  loadLocalProject: () => {},
-  loadProject: () => {},
-  loadUntitled: () => {},
-  startTutorial: () => {}
+  loadLocalProject: () => {}
 };
 
 ProjectPage.propTypes = {
@@ -171,10 +141,7 @@ ProjectPage.propTypes = {
   userId: PropTypes.string,
   // dispatch props
   generate: PropTypes.func,
-  loadLocalProject: PropTypes.func,
-  loadProject: PropTypes.func,
-  loadUntitled: PropTypes.func,
-  startTutorial: PropTypes.func
+  loadLocalProject: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -204,35 +171,6 @@ function mapDispatchToProps(dispatch) {
     },
     loadLocalProject: (opts) => {
       dispatch(loadLocalProject(opts));
-    },
-    loadProject: (project, generateFn) => {
-      dispatch(loadProject(project, generateFn));
-    },
-    loadUntitled: (opts = {}) => {
-      dispatch({
-        ...{
-          type: 'LOAD_PROJECT_RES',
-          id: 'none',
-          name: 'untitled',
-          code: opts.code || OrderedMap(),
-          configuration: 'default',
-          configs: opts.configs || OrderedMap(),
-          engines: opts.engines || OrderedMap(),
-          meta: opts.meta || OrderedMap(),
-          path: 'untitled',
-          generators: opts.generators || OrderedMap(),
-          imports: opts.imports || OrderedMap(),
-          importsData: opts.importsData || List(),
-          schemas: opts.schemas || OrderedMap(),
-          specs: opts.specs || OrderedMap(),
-          templates: opts.templates || OrderedMap(),
-          version: 'latest'
-        },
-        opts
-      });
-    },
-    startTutorial: (opts) => {
-      dispatch(startTutorial(opts));
     }
   };
 }

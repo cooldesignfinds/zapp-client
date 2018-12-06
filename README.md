@@ -24,4 +24,4 @@ npm start
 
 ## Usage
 
-http://localhost:3000/?code=~/Developer/my-app
+http://localhost:3000/local/path/to/your/project

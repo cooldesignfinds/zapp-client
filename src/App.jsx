@@ -134,46 +134,8 @@ class App extends React.Component {
         <Provider store={store}>
           <Router history={history}>
             <Route path={CONFIG.baseHref} component={MainTemplate}>
-              <IndexRoute component={OpenPage} />
-              <Route path="new" component={NewPage} />
-              <Route path="local" component={ProjectPage} />
-              <Route path="local/*" component={ProjectPage} />
-              <Route path="local/code" component={ProjectPage} />
-              <Route path="local/code/*.*" component={ProjectPage} />
-              <Route path="local/configs" component={ProjectPage} />
-              <Route path="local/configs/*" component={ProjectPage} />
-              <Route path="local/files" component={ProjectPage} />
-              <Route path="local/files/*" component={ProjectPage} />
-              <Route path="local/generators" component={ProjectPage} />
-              <Route path="local/generators/*" component={ProjectPage} />
-              <Route path="local/schemas" component={ProjectPage} />
-              <Route path="local/schemas/*" component={ProjectPage} />
-              <Route path="local/specs" component={ProjectPage} />
-              <Route path="local/specs/*" component={ProjectPage} />
-              <Route path="local/templates" component={ProjectPage} />
-              <Route path="local/templates/*" component={ProjectPage} />
-              <Route path="tutorials/:tutorialName" component={ProjectPage} />
-              <Route path="untitled" component={ProjectPage} />
-              <Route path="untitled/*" component={ProjectPage} />
-              <Route path="untitled/code" component={ProjectPage} />
-              <Route path="untitled/code/*.*" component={ProjectPage} />
-              <Route path="untitled/configs" component={ProjectPage} />
-              <Route path="untitled/configs/*" component={ProjectPage} />
-              <Route path="untitled/files" component={ProjectPage} />
-              <Route path="untitled/files/*" component={ProjectPage} />
-              <Route path="untitled/generators" component={ProjectPage} />
-              <Route path="untitled/generators/*" component={ProjectPage} />
-              <Route path="untitled/schemas" component={ProjectPage} />
-              <Route path="untitled/schemas/*" component={ProjectPage} />
-              <Route path="untitled/specs" component={ProjectPage} />
-              <Route path="untitled/specs/*" component={ProjectPage} />
-              <Route path="untitled/templates" component={ProjectPage} />
-              <Route path="untitled/templates/*" component={ProjectPage} />
-              <Route path=":user/:generator" component={ProjectPage} />
-              <Route path=":user/:generator/:version" component={ProjectPage} />
-              <Route path=":user/:generator/:version/:configuration" component={ProjectPage} />
+              <Route path="*" component={ProjectPage} />
             </Route>
-            <Route path="*" component={NotFoundPage} />
           </Router>
         </Provider>
       </ThemeContext.Provider>
