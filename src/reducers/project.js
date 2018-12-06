@@ -351,7 +351,7 @@ function projectReducer(state = initialState, action) {
       };
     }
     case 'UNDO': {
-      if (state.history.length === 0) {
+      if (state.historyIndex === 0) {
         return state;
       }
       const newHistoryIndex = state.historyIndex - 1;
@@ -371,7 +371,7 @@ function projectReducer(state = initialState, action) {
       return newState;
     }
     case 'REDO': {
-      if (state.history.length === 0) {
+      if (state.historyIndex === state.history.length - 1) {
         return state;
       }
       const newHistoryIndex = state.historyIndex + 1;
