@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import autologin from '../../actions/autologin';
 import clearLogs from '../../actions/clearLogs';
 import download from '../../actions/download';
 import focusPane from '../../actions/focusPane';
@@ -53,7 +52,6 @@ class MainTemplate extends Component {
     browserHistory.listen(this.handleLocationChange);
     window.addEventListener('keydown', this.handleKeyDown);
     window.onbeforeunload = this.handleBeforeUnload.bind(this);
-    // this.props.autologin();
   }
 
   componentDidMount() {
@@ -233,7 +231,6 @@ MainTemplate.defaultProps = {
   hasUnsavedChanges: false,
   isLoading: true,
   // dispatch props
-  autologin: () => {},
   clearLogs: () => {},
   download: () => {},
   focusPane: () => {},
@@ -260,7 +257,6 @@ MainTemplate.propTypes = {
   hasUnsavedChanges: PropTypes.bool,
   isLoading: PropTypes.bool,
   // dispatch props
-  autologin: PropTypes.func,
   clearLogs: PropTypes.func,
   download: PropTypes.func,
   focusPane: PropTypes.func,
@@ -285,9 +281,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    autologin: () => {
-      dispatch(autologin());
-    },
     clearLogs: () => {
       dispatch(clearLogs());
     },
