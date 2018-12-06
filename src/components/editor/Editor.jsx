@@ -4,6 +4,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { List, OrderedMap } from 'immutable';
 
+import generate from '../../actions/generate';
 import hideSelector from '../../actions/hideSelector';
 import moveItem from '../../actions/moveItem';
 
@@ -95,6 +96,7 @@ class Editor extends Component {
       dragToId: '',
       dragDirection: ''
     });
+    this.props.generate();
   }
   handleRefFocus(itemPath, refType, isCode) {
     setTimeout(() => {
@@ -290,7 +292,6 @@ Editor.defaultProps = {
   allItems: OrderedMap(),
   items: OrderedMap(),
   leftOffset: 0,
-  newItemPath: '',
   paneIndex: -1,
   paneType: '',
   projectId: '',
@@ -301,6 +302,7 @@ Editor.defaultProps = {
   // state props
   expandedItems: [],
   // dispatch props
+  generate: () => {},
   hideSelector: () => {},
   moveItem: () => {}
 };
@@ -315,7 +317,6 @@ Editor.propTypes = {
     PropTypes.instanceOf(OrderedMap)
   ]),
   leftOffset: PropTypes.number,
-  newItemPath: PropTypes.string,
   paneIndex: PropTypes.number,
   paneType: PropTypes.string,
   projectId: PropTypes.string,
@@ -326,6 +327,7 @@ Editor.propTypes = {
   // state props
   expandedItems: PropTypes.array,
   // dispatch props
+  generate: PropTypes.func,
   hideSelector: PropTypes.func,
   moveItem: PropTypes.func
 };
@@ -334,7 +336,6 @@ function mapStateToProps(state, props) {
   const pane = state.pane.items[props.paneIndex];
   return {
     expandedItems: pane.editor.expandedItems,
-    newItemPath: pane.editor.newItemPath,
     projectId: state.project.id
   };
 }
@@ -343,6 +344,9 @@ function mapDispatchToProps(dispatch, props) {
   return {
     hideSelector: () => {
       dispatch(hideSelector());
+    },
+    generate: () => {
+      dispatch(generate());
     },
     moveItem: (opts) => {
       dispatch(

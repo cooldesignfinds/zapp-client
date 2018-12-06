@@ -390,14 +390,6 @@ class EditorItem extends Component {
             'down'
           );
         },
-        enter: () => {
-          if (!this.props.isNew || event.target.name === 'value') {
-            this.setState({
-              isChanging: false
-            });
-          }
-          return true;
-        },
         esc: () => {
           this.props.resetNewItemPath();
           this.props.hideSelector();
@@ -635,6 +627,8 @@ class EditorItem extends Component {
         changeMode: '',
         changeValue: ''
       });
+    } else if (!this.props.isNew || event.target.name === 'value') {
+      this.props.generate();
     }
 
     this.props.resetNewItemPath();
@@ -643,21 +637,6 @@ class EditorItem extends Component {
     if (document.activeElement) {
       document.activeElement.blur();
     }
-  }
-  handleSubmitNew(event) {
-    event.preventDefault();
-
-    this.commitChanges(this.state.changeKey, this.state.changeValue, this.state.changeType);
-
-    this.props.hideSelector();
-    this.props.resetNewItemPath();
-
-    this.setState({
-      isChanging: false,
-      changeKey: '',
-      changeMode: '',
-      changeValue: ''
-    });
   }
   handleSuggestions(event, properties = [], ignoreProperties = [], newValue = '', field, selectionDirection) {
     // console.log('suggestProperties');
