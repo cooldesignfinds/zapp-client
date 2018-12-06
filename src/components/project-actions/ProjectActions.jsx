@@ -2,13 +2,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { List, OrderedMap } from 'immutable';
 
 import download from '../../actions/download';
 import generate from '../../actions/generate';
 import openFolder from '../../actions/openFolder';
 import saveProject from '../../actions/saveProject';
-import showSelector from '../../actions/showSelector';
 
 import IconButton from '../../components/icon-button/IconButton';
 
@@ -31,7 +29,7 @@ class ProjectActions extends Component {
     this.props.saveProject();
   }
   render() {
-    const folder = getWorkspaceDir(`${this.props.projectAuthorUsername}/${this.props.projectName}/${this.props.projectVersion}/${this.props.projectConfiguration}`);
+    const folder = getWorkspaceDir(`${this.props.projectName}/${this.props.projectVersion}/${this.props.projectConfiguration}`);
     return (
       <Fragment>
         <li className={styles.folder}>
@@ -74,7 +72,7 @@ class ProjectActions extends Component {
             />
           </If>
           <IconButton
-            disabled={this.props.projectVersion !== 'latest' || this.props.projectAuthorUsername !== this.props.username}
+            disabled={this.props.projectVersion !== 'latest'}
             id="save-button"
             onClick={() => this.handleSave()}
             paddingHeight={12}
@@ -110,87 +108,45 @@ class ProjectActions extends Component {
 
 ProjectActions.defaultProps = {
   // state
-  code: OrderedMap(),
-  configs: OrderedMap(),
-  engines: OrderedMap(),
-  files: OrderedMap(),
-  generators: OrderedMap(),
   hasCodeFiles: false,
   hasUnsavedChanges: false,
   isGenerating: false,
   isSaving: false,
-  imports: OrderedMap(),
-  importsData: List(),
-  projectAuthorUsername: '',
   projectConfiguration: '',
-  projectPath: '',
   projectName: '',
   projectVersion: '',
-  schemas: OrderedMap(),
-  specs: OrderedMap(),
-  templates: OrderedMap(),
-  username: '',
   // dispatch
   download: () => {},
   generate: () => {},
   openFolder: () => {},
-  saveProject: () => {},
-  showSelector: () => {}
+  saveProject: () => {}
 };
 
 ProjectActions.propTypes = {
   // state
-  code: PropTypes.instanceOf(OrderedMap),
-  configs: PropTypes.instanceOf(OrderedMap),
-  engines: PropTypes.instanceOf(OrderedMap),
-  files: PropTypes.instanceOf(OrderedMap),
-  generators: PropTypes.instanceOf(OrderedMap),
   hasCodeFiles: PropTypes.bool,
   hasUnsavedChanges: PropTypes.bool,
-  imports: PropTypes.instanceOf(OrderedMap),
-  importsData: PropTypes.instanceOf(List),
   isGenerating: PropTypes.bool,
   isSaving: PropTypes.bool,
-  projectAuthorUsername: PropTypes.string,
   projectConfiguration: PropTypes.string,
-  projectPath: PropTypes.string,
   projectName: PropTypes.string,
   projectVersion: PropTypes.string,
-  schemas: PropTypes.instanceOf(OrderedMap),
-  specs: PropTypes.instanceOf(OrderedMap),
-  templates: PropTypes.instanceOf(OrderedMap),
-  username: PropTypes.string,
   // dispatch
   download: PropTypes.func,
   generate: PropTypes.func,
   openFolder: PropTypes.func,
-  saveProject: PropTypes.func,
-  showSelector: PropTypes.func
+  saveProject: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    code: state.project.code,
-    configs: state.project.configs,
-    engines: state.project.engines,
-    files: state.project.files,
-    generators: state.project.generators,
     hasCodeFiles: Object.keys(state.project.codeFiles).length > 0,
     hasUnsavedChanges: state.project.hasUnsavedChanges,
-    imports: state.project.imports,
-    importsData: state.project.importsData,
     isGenerating: state.project.isGenerating,
-    isLoading: !state.user.isComplete,
     isSaving: state.project.isSaving,
-    projectAuthorUsername: state.project.author && state.project.author.username ? state.project.author.username : '',
     projectConfiguration: state.project.configuration,
-    projectPath: state.project.id,
     projectName: state.project.name,
-    projectVersion: state.project.version,
-    schemas: state.project.schemas,
-    specs: state.project.specs,
-    templates: state.project.templates,
-    username: state.user.username
+    projectVersion: state.project.version
   };
 }
 
@@ -207,9 +163,6 @@ function mapDispatchToProps(dispatch) {
     },
     saveProject: () => {
       dispatch(saveProject());
-    },
-    showSelector: (opts) => {
-      dispatch(showSelector(opts));
     }
   };
 }

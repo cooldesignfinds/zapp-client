@@ -5,11 +5,6 @@ import { connect } from 'react-redux';
 import hideModal from '../../actions/hideModal';
 
 import ChangeIconForm from '../../forms/change-icon/ChangeIconForm';
-import CommitForm from '../../forms/commit/CommitForm';
-import NewConfigurationForm from '../../forms/new-configuration/NewConfigurationForm';
-import NewForm from '../../forms/new/NewForm';
-import NewVersionForm from '../../forms/new-version/NewVersionForm';
-import ResetForm from '../../forms/reset/ResetForm';
 
 import IconButton from '../icon-button/IconButton';
 
@@ -34,21 +29,6 @@ class Modal extends Component {
             <Choose>
               <When condition={this.props.currentModal === 'changeIcon'}>
                 <ChangeIconForm />
-              </When>
-              <When condition={this.props.currentModal === 'commit'}>
-                <CommitForm />
-              </When>
-              <When condition={this.props.currentModal === 'reset'}>
-                <ResetForm />
-              </When>
-              <When condition={this.props.currentModal === 'newConfiguration'}>
-                <NewConfigurationForm />
-              </When>
-              <When condition={this.props.currentModal === 'newGenerator'}>
-                <NewForm />
-              </When>
-              <When condition={this.props.currentModal === 'newVersion'}>
-                <NewVersionForm />
               </When>
               <Otherwise>
                 {this.props.content}

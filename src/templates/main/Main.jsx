@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import clearLogs from '../../actions/clearLogs';
-import download from '../../actions/download';
 import focusPane from '../../actions/focusPane';
 import generate from '../../actions/generate';
 import loadImports from '../../actions/loadImports';
@@ -19,7 +18,6 @@ import undo from '../../actions/undo';
 import Errors from '../../components/errors/Errors';
 import Header from '../../components/header/Header';
 import HintWrapper from '../../components/hint-wrapper/HintWrapper';
-import Imports from '../../components/imports/Imports';
 import Modal from '../../components/modal/Modal';
 import SelectorWrapper from '../../components/selector-wrapper/SelectorWrapper';
 import Shortcuts from '../../components/shortcuts/Shortcuts';
@@ -178,9 +176,6 @@ class MainTemplate extends Component {
       );
     }
 
-    // if (this.props.isLoading) {
-    //   return null;
-    // }
     return (
       <ThemeContext.Consumer>
         {({ theme }) => (
@@ -201,9 +196,6 @@ class MainTemplate extends Component {
             </Helmet>
             <Header />
             {this.props.children}
-            <If condition={false}>
-              <Imports />
-            </If>
             <Errors />
             <Modal />
             <HintWrapper />
@@ -222,10 +214,8 @@ MainTemplate.defaultProps = {
   // state props
   focusedPane: 0,
   hasUnsavedChanges: false,
-  isLoading: true,
   // dispatch props
   clearLogs: () => {},
-  download: () => {},
   focusPane: () => {},
   generate: () => {},
   loadImports: () => {},
@@ -247,10 +237,8 @@ MainTemplate.propTypes = {
   // state props
   focusedPane: PropTypes.number,
   hasUnsavedChanges: PropTypes.bool,
-  isLoading: PropTypes.bool,
   // dispatch props
   clearLogs: PropTypes.func,
-  download: PropTypes.func,
   focusPane: PropTypes.func,
   generate: PropTypes.func,
   loadImports: PropTypes.func,
@@ -265,8 +253,7 @@ MainTemplate.propTypes = {
 function mapStateToProps(state) {
   return {
     focusedPane: state.pane.focusedItem,
-    hasUnsavedChanges: state.project.hasUnsavedChanges,
-    isLoading: !state.user.isComplete
+    hasUnsavedChanges: state.project.hasUnsavedChanges
   };
 }
 
@@ -274,9 +261,6 @@ function mapDispatchToProps(dispatch) {
   return {
     clearLogs: () => {
       dispatch(clearLogs());
-    },
-    download: () => {
-      dispatch(download());
     },
     focusPane: (opts) => {
       dispatch(focusPane(opts));

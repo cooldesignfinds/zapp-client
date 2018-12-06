@@ -23,9 +23,6 @@ import paneReducer from './reducers/pane';
 import projectReducer from './reducers/project';
 import selectorReducer from './reducers/selector';
 import shortcutsReducer from './reducers/shortcuts';
-import teamReducer from './reducers/team';
-import userReducer from './reducers/user';
-import userGeneratorsReducer from './reducers/userGenerators';
 
 import ProjectPage from './pages/project/Project';
 
@@ -56,10 +53,7 @@ const store = createStore(
     project: projectReducer,
     routing: routerReducer,
     selector: selectorReducer,
-    shortcuts: shortcutsReducer,
-    team: teamReducer,
-    user: userReducer,
-    userGenerators: userGeneratorsReducer
+    shortcuts: shortcutsReducer
   }),
   applyMiddleware(
     thunk,

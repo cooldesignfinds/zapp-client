@@ -41,7 +41,6 @@ class Pane extends Component {
       : (itemType === 'code' ? items.value : '');
     const iconType = itemMode || 'file';
     const readOnly = this.props.type === 'code'
-      || (this.props.projectAuthorUsername !== this.props.username)
       || this.props.projectVersion !== 'latest';
     return (
       <ThemeContext.Consumer>
@@ -139,13 +138,11 @@ Pane.defaultProps = {
   type: '',
   width: 100,
   // state props
-  projectAuthorUsername: '',
   projectId: '',
   projectVersion: '',
   selectedTreeItem: '',
   showSidebar: false,
   totalPaneCount: 0,
-  username: '',
   // dispatch props
   focusPane: () => {}
 };
@@ -160,13 +157,11 @@ Pane.propTypes = {
   type: PropTypes.string,
   width: PropTypes.number,
   // state props
-  projectAuthorUsername: PropTypes.string,
   projectId: PropTypes.string,
   projectVersion: PropTypes.string,
   selectedTreeItem: PropTypes.string,
   showSidebar: PropTypes.bool,
   totalPaneCount: PropTypes.number,
-  username: PropTypes.string,
   // dispatch props
   focusPane: PropTypes.func
 };
@@ -174,13 +169,11 @@ Pane.propTypes = {
 function mapStateToProps(state, props) {
   const pane = state.pane.items[props.index];
   return {
-    projectAuthorUsername: state.project.author && state.project.author.username ? state.project.author.username : '',
     projectId: state.project.id,
     projectVersion: state.project.version,
     selectedTreeItem: pane.tree.selectedItem,
     showSidebar: pane.tree.open,
-    totalPaneCount: state.pane.items.length,
-    username: state.user.username
+    totalPaneCount: state.pane.items.length
   };
 }
 

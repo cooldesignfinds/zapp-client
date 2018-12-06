@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import Error from '../../components/error/Error';
 import Form from '../../components/form/Form';
 import Icon from '../../components/icon/Icon';
 import SubmitButton from '../../components/submit-button/SubmitButton';
@@ -110,7 +109,6 @@ ChangeIconForm.defaultProps = {
   isLoading: false,
   projectColor: PropTypes.string,
   projectIcon: '',
-  username: '',
   // dispatch props
   changeColor: () => {},
   updateIcon: () => {}
@@ -118,11 +116,9 @@ ChangeIconForm.defaultProps = {
 
 ChangeIconForm.propTypes = {
   // state props
-  error: PropTypes.string,
   isLoading: PropTypes.bool,
   projectColor: PropTypes.string,
   projectIcon: PropTypes.string,
-  username: PropTypes.string,
   // dispatch props
   changeColor: PropTypes.func,
   updateIcon: PropTypes.func
@@ -130,11 +126,9 @@ ChangeIconForm.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    error: state.newProject.error,
     isLoading: state.newProject.isLoading,
     projectColor: state.project.color,
-    projectIcon: state.project.icon,
-    username: state.user.username
+    projectIcon: state.project.icon
   };
 }
 
