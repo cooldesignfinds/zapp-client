@@ -146,7 +146,7 @@ class Imports extends Component {
       <ThemeContext.Consumer>
         {({ theme }) => (
           <div
-            className={classNames(styles.imports, this.props.terminalIsVisible ? styles.terminal : null)}
+            className={styles.imports}
             style={{
               backgroundColor: theme.background || '#000',
               borderTopColor: theme.borderColor
@@ -245,7 +245,6 @@ Imports.defaultProps = {
   projectId: '',
   projectVersion: '',
   showSelector: () => {},
-  terminalIsVisible: false,
   updateImport: () => {},
   userGenerators: [],
   username: ''
@@ -264,7 +263,6 @@ Imports.propTypes = {
   projectId: PropTypes.string,
   projectVersion: PropTypes.string,
   showSelector: PropTypes.func,
-  terminalIsVisible: PropTypes.bool,
   updateImport: PropTypes.func,
   userGenerators: PropTypes.array,
   username: PropTypes.string
@@ -281,7 +279,6 @@ function mapStateToProps(state = {}) {
     projectConfiguration: state.project.configuration,
     projectId: state.project.id,
     projectVersion: state.project.version,
-    terminalIsVisible: state.terminal.show,
     userGenerators: state.userGenerators.generators,
     username: state.user.username
   };

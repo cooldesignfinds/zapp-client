@@ -24,7 +24,6 @@ import projectReducer from './reducers/project';
 import selectorReducer from './reducers/selector';
 import shortcutsReducer from './reducers/shortcuts';
 import teamReducer from './reducers/team';
-import terminalReducer from './reducers/terminal';
 import userReducer from './reducers/user';
 import userGeneratorsReducer from './reducers/userGenerators';
 
@@ -59,7 +58,6 @@ const store = createStore(
     selector: selectorReducer,
     shortcuts: shortcutsReducer,
     team: teamReducer,
-    terminal: terminalReducer,
     user: userReducer,
     userGenerators: userGeneratorsReducer
   }),

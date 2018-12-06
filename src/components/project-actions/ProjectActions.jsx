@@ -6,12 +6,9 @@ import { List, OrderedMap } from 'immutable';
 
 import download from '../../actions/download';
 import generate from '../../actions/generate';
-import hideTerminal from '../../actions/hideTerminal';
 import openFolder from '../../actions/openFolder';
-import openTerminal from '../../actions/openTerminal';
 import saveProject from '../../actions/saveProject';
 import showSelector from '../../actions/showSelector';
-import showTerminal from '../../actions/showTerminal';
 
 import IconButton from '../../components/icon-button/IconButton';
 
@@ -32,16 +29,6 @@ class ProjectActions extends Component {
   }
   handleSave() {
     this.props.saveProject();
-  }
-  handleTerminal() {
-    if (this.props.terminalIsVisible) {
-      this.props.hideTerminal();
-    } else {
-      this.props.showTerminal();
-      if (this.props.terminals.length === 0) {
-        this.props.openTerminal();
-      }
-    }
   }
   render() {
     const folder = getWorkspaceDir(`${this.props.projectAuthorUsername}/${this.props.projectName}/${this.props.projectVersion}/${this.props.projectConfiguration}`);
@@ -142,18 +129,13 @@ ProjectActions.defaultProps = {
   schemas: OrderedMap(),
   specs: OrderedMap(),
   templates: OrderedMap(),
-  terminalIsVisible: false,
-  terminals: [],
   username: '',
   // dispatch
   download: () => {},
   generate: () => {},
-  hideTerminal: () => {},
   openFolder: () => {},
-  openTerminal: () => {},
   saveProject: () => {},
-  showSelector: () => {},
-  showTerminal: () => {}
+  showSelector: () => {}
 };
 
 ProjectActions.propTypes = {
@@ -177,18 +159,13 @@ ProjectActions.propTypes = {
   schemas: PropTypes.instanceOf(OrderedMap),
   specs: PropTypes.instanceOf(OrderedMap),
   templates: PropTypes.instanceOf(OrderedMap),
-  terminalIsVisible: PropTypes.bool,
-  terminals: PropTypes.array,
   username: PropTypes.string,
   // dispatch
   download: PropTypes.func,
   generate: PropTypes.func,
-  hideTerminal: PropTypes.func,
   openFolder: PropTypes.func,
-  openTerminal: PropTypes.func,
   saveProject: PropTypes.func,
-  showSelector: PropTypes.func,
-  showTerminal: PropTypes.func
+  showSelector: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -213,8 +190,6 @@ function mapStateToProps(state) {
     schemas: state.project.schemas,
     specs: state.project.specs,
     templates: state.project.templates,
-    terminalIsVisible: state.terminal.show,
-    terminals: state.terminal.items,
     username: state.user.username
   };
 }
@@ -227,23 +202,14 @@ function mapDispatchToProps(dispatch) {
     generate: (opts) => {
       dispatch(generate(opts));
     },
-    hideTerminal: (opts) => {
-      dispatch(hideTerminal(opts));
-    },
     openFolder: (opts) => {
       dispatch(openFolder(opts));
-    },
-    openTerminal: (opts) => {
-      dispatch(openTerminal(opts));
     },
     saveProject: () => {
       dispatch(saveProject());
     },
     showSelector: (opts) => {
       dispatch(showSelector(opts));
-    },
-    showTerminal: (opts) => {
-      dispatch(showTerminal(opts));
     }
   };
 }

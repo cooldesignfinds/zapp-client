@@ -13,19 +13,16 @@ import redo from '../../actions/redo';
 import saveProject from '../../actions/saveProject';
 import selectPaneTreeItem from '../../actions/selectPaneTreeItem';
 import setPaneType from '../../actions/setPaneType';
-import showTerminal from '../../actions/showTerminal';
 import togglePaneTree from '../../actions/togglePaneTree';
 import undo from '../../actions/undo';
 
 import Errors from '../../components/errors/Errors';
 import Header from '../../components/header/Header';
 import HintWrapper from '../../components/hint-wrapper/HintWrapper';
-import Icon from '../../components/icon/Icon';
 import Imports from '../../components/imports/Imports';
 import Modal from '../../components/modal/Modal';
 import SelectorWrapper from '../../components/selector-wrapper/SelectorWrapper';
 import Shortcuts from '../../components/shortcuts/Shortcuts';
-import Terminals from '../../components/terminals/Terminals';
 import Upgrade from '../../components/upgrade/Upgrade';
 
 import { ThemeContext } from '../../contexts/theme';
@@ -148,9 +145,6 @@ class MainTemplate extends Component {
     } else if ((event.ctrlKey || event.metaKey) && shortcutKey === 's') {
       this.props.saveProject();
       event.preventDefault();
-    } else if ((event.ctrlKey || event.metaKey) && shortcutKey === 't') {
-      this.props.showTerminal();
-      event.preventDefault();
     } else if ((event.ctrlKey || event.metaKey) && shortcutKey === 'z') {
       if (event.shiftKey) {
         this.props.redo();
@@ -210,7 +204,6 @@ class MainTemplate extends Component {
             <If condition={false}>
               <Imports />
             </If>
-            <Terminals />
             <Errors />
             <Modal />
             <HintWrapper />
@@ -240,7 +233,6 @@ MainTemplate.defaultProps = {
   saveProject: () => {},
   setPaneType: () => {},
   selectPaneTreeItem: () => {},
-  showTerminal: () => {},
   togglePaneTree: () => {},
   undo: () => {}
 };
@@ -266,7 +258,6 @@ MainTemplate.propTypes = {
   saveProject: PropTypes.func,
   setPaneType: PropTypes.func,
   selectPaneTreeItem: PropTypes.func,
-  showTerminal: PropTypes.func,
   togglePaneTree: PropTypes.func,
   undo: PropTypes.func
 };
@@ -307,9 +298,6 @@ function mapDispatchToProps(dispatch) {
     },
     selectPaneTreeItem: (opts) => {
       dispatch(selectPaneTreeItem(opts));
-    },
-    showTerminal: (opts) => {
-      dispatch(showTerminal(opts));
     },
     togglePaneTree: (opts) => {
       dispatch(togglePaneTree(opts));
