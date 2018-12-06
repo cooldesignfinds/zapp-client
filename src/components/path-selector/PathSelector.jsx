@@ -148,6 +148,11 @@ class PathSelector extends Component {
       paneIndex: this.props.paneIndex
     });
 
+    this.setState({
+      changePath: '',
+      isChanging: false
+    });
+
     if (this.pathRef) {
       this.pathRef.blur();
     }
