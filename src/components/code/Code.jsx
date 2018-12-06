@@ -69,12 +69,9 @@ import 'brace/mode/vbscript';
 import 'brace/mode/xml';
 import 'brace/mode/yaml';
 
-import 'brace/theme/tomorrow';
 import 'brace/theme/tomorrow_night_eighties';
 
 import updateItem from '../../actions/updateItem';
-
-import { ThemeContext } from '../../contexts/theme';
 
 import styles from './Code.sass';
 
@@ -114,37 +111,33 @@ class Code extends Component {
       ? this.state.changeValue
       : (this.props.value || '');
     return (
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <AceEditor
-            defaultValue={this.props.defaultValue || ''}
-            editorProps={{ $blockScrolling: true }}
-            height={
-              this.props.height === 'auto'
-                ? `${
-                  12 + (
-                    12 * (value.match(/\n/g) || []).length
-                  )
-                }px`
-                : this.props.height
-            }
-            mode={this.props.mode || 'text'}
-            name={this.props.id}
-            onBlur={() => this.handleBlur()}
-            onChange={changeValue => this.handleChange(changeValue)}
-            onFocus={() => this.handleFocus()}
-            readOnly={this.props.readOnly}
-            style={{
-              fontFamily: 'Inconsolata'
-            }}
-            theme={theme.editor}
-            tabSize={2}
-            useSoftTabs={false}
-            value={value}
-            width={this.props.width}
-          />
-        )}
-      </ThemeContext.Consumer>
+      <AceEditor
+        defaultValue={this.props.defaultValue || ''}
+        editorProps={{ $blockScrolling: true }}
+        height={
+          this.props.height === 'auto'
+            ? `${
+              12 + (
+                12 * (value.match(/\n/g) || []).length
+              )
+            }px`
+            : this.props.height
+        }
+        mode={this.props.mode || 'text'}
+        name={this.props.id}
+        onBlur={() => this.handleBlur()}
+        onChange={changeValue => this.handleChange(changeValue)}
+        onFocus={() => this.handleFocus()}
+        readOnly={this.props.readOnly}
+        style={{
+          fontFamily: 'Inconsolata'
+        }}
+        tabSize={2}
+        theme="tomorrow_night_eighties"
+        useSoftTabs={false}
+        value={value}
+        width={this.props.width}
+      />
     );
   }
 }

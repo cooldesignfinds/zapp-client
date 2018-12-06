@@ -9,8 +9,6 @@ import { Router, Route, useRouterHistory } from 'react-router';
 import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 
-import { ThemeContext, themes } from './contexts/theme';
-
 import deviceReducer from './reducers/device';
 import generatorsReducer from './reducers/generators';
 import logReducer from './reducers/log';
@@ -67,38 +65,15 @@ const history = syncHistoryWithStore(
 );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.toggleTheme = () => {
-      this.setState(state => ({
-        theme: state.theme === themes.dark
-          ? themes.light
-          : themes.dark,
-        themeName: state.theme === themes.dark
-          ? 'light'
-          : 'dark'
-      }));
-    };
-
-    this.state = {
-      theme: themes.dark,
-      themeName: 'dark',
-      toggleTheme: this.toggleTheme
-    };
-  }
-
   render() {
     return (
-      <ThemeContext.Provider value={this.state}>
-        <Provider store={store}>
-          <Router history={history}>
-            <Route path={CONFIG.baseHref} component={MainTemplate}>
-              <Route path="*" component={ProjectPage} />
-            </Route>
-          </Router>
-        </Provider>
-      </ThemeContext.Provider>
+      <Provider store={store}>
+        <Router history={history}>
+          <Route path={CONFIG.baseHref} component={MainTemplate}>
+            <Route path="*" component={ProjectPage} />
+          </Route>
+        </Router>
+      </Provider>
     );
   }
 }

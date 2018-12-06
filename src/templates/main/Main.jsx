@@ -22,8 +22,6 @@ import SelectorWrapper from '../../components/selector-wrapper/SelectorWrapper';
 import Shortcuts from '../../components/shortcuts/Shortcuts';
 import Upgrade from '../../components/upgrade/Upgrade';
 
-import { ThemeContext } from '../../contexts/theme';
-
 import getItemPathParts from '../../lib/getItemPathParts';
 import getZappVersion from '../../lib/getZappVersion';
 import getShortcutKey from '../../lib/getShortcutKey';
@@ -173,33 +171,15 @@ class MainTemplate extends Component {
     }
 
     return (
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <div className={styles.main}>
-            <Helmet>
-              <style type="text/css">
-                {`
-                  body {
-                    background-color: ${theme.background};
-                    color: ${theme.textColor};
-                  }
-
-                  button, input {
-                    color: ${theme.textColor};
-                  }
-                `}
-              </style>
-            </Helmet>
-            <Header />
-            {this.props.children}
-            <Errors />
-            <Modal />
-            <HintWrapper />
-            <SelectorWrapper />
-            <Shortcuts />
-          </div>
-        )}
-      </ThemeContext.Consumer>
+      <div className={styles.main}>
+        <Header />
+        {this.props.children}
+        <Errors />
+        <Modal />
+        <HintWrapper />
+        <SelectorWrapper />
+        <Shortcuts />
+      </div>
     );
   }
 }

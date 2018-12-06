@@ -10,10 +10,7 @@ import updateNewItemPath from '../../actions/updateNewItemPath';
 
 import IconButton from '../../components/icon-button/IconButton';
 
-import { ThemeContext } from '../../contexts/theme';
-
 import formatPaneName from '../../lib/formatPaneName';
-import getBoldMatches from '../../lib/getBoldMatches';
 import getItemPathParts from '../../lib/getItemPathParts';
 
 import styles from './PathSelector.sass';
@@ -157,66 +154,59 @@ class PathSelector extends Component {
   }
   render() {
     return (
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <div
-            className={styles.pathSelector}
-          >
-            <IconButton
-              onClick={() => this.handleNew()}
-              paddingHeight={16}
-              paddingWidth={10}
-              size={8}
-              title={`Add ${formatPaneName(this.props.type)} in ${this.props.itemPath}`}
-              type={this.props.iconType}
-            />
-            <form
-              className={classNames(
-                styles.pathSelectorForm,
-                this.props.readOnly ? styles.readOnly : null
-              )}
-              onSubmit={event => this.handleSubmit(event)}
-            >
-              <input
-                autoComplete="off"
-                spellCheck="false"
-                className={styles.pathSelectorInput}
-                id={`pane-${this.props.paneIndex}_path-selector`}
-                ref={(ref) => { this.pathRef = ref; }}
-                onBlur={() => this.handleBlur()}
-                onChange={event => this.handleChange(event)}
-                onFocus={event => this.handlePathSelector(event)}
-                onKeyUp={event => this.handleKeyUp(event)}
-                style={{
-                  borderBottomColor: theme.borderColor
-                }}
-                title={`Path Selector (${this.props.itemPath})`}
-                value={this.state.isChanging ? this.state.changePath : this.props.itemPath}
-              />
-            </form>
-            <If condition={!this.props.readOnly}>
-              <IconButton
-                id={`pane-${this.props.paneIndex}_add-item-button`}
-                onClick={() => this.handleNew()}
-                paddingHeight={16}
-                paddingWidth={10}
-                size={8}
-                title={`Add ${formatPaneName(this.props.type)} in ${this.props.itemPath}`}
-                type="add-gray"
-              />
-            </If>
-            <IconButton
-              id={`pane-${this.props.paneIndex}_recent-paths-button`}
-              onClick={event => this.handleRecentSelector(event)}
-              paddingHeight={16}
-              paddingWidth={10}
-              size={8}
-              title="Recent Paths"
-              type="recent-gray"
-            />
-          </div>
-        )}
-      </ThemeContext.Consumer>
+      <div
+        className={styles.pathSelector}
+      >
+        <IconButton
+          onClick={() => this.handleNew()}
+          paddingHeight={16}
+          paddingWidth={10}
+          size={8}
+          title={`Add ${formatPaneName(this.props.type)} in ${this.props.itemPath}`}
+          type={this.props.iconType}
+        />
+        <form
+          className={classNames(
+            styles.pathSelectorForm,
+            this.props.readOnly ? styles.readOnly : null
+          )}
+          onSubmit={event => this.handleSubmit(event)}
+        >
+          <input
+            autoComplete="off"
+            spellCheck="false"
+            className={styles.pathSelectorInput}
+            id={`pane-${this.props.paneIndex}_path-selector`}
+            ref={(ref) => { this.pathRef = ref; }}
+            onBlur={() => this.handleBlur()}
+            onChange={event => this.handleChange(event)}
+            onFocus={event => this.handlePathSelector(event)}
+            onKeyUp={event => this.handleKeyUp(event)}
+            title={`Path Selector (${this.props.itemPath})`}
+            value={this.state.isChanging ? this.state.changePath : this.props.itemPath}
+          />
+        </form>
+        <If condition={!this.props.readOnly}>
+          <IconButton
+            id={`pane-${this.props.paneIndex}_add-item-button`}
+            onClick={() => this.handleNew()}
+            paddingHeight={16}
+            paddingWidth={10}
+            size={8}
+            title={`Add ${formatPaneName(this.props.type)} in ${this.props.itemPath}`}
+            type="add-gray"
+          />
+        </If>
+        <IconButton
+          id={`pane-${this.props.paneIndex}_recent-paths-button`}
+          onClick={event => this.handleRecentSelector(event)}
+          paddingHeight={16}
+          paddingWidth={10}
+          size={8}
+          title="Recent Paths"
+          type="recent-gray"
+        />
+      </div>
     );
   }
 }

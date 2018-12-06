@@ -13,8 +13,6 @@ import Button from '../../components/button/Button';
 import Icon from '../../components/icon/Icon';
 import IconButton from '../../components/icon-button/IconButton';
 
-import { ThemeContext } from '../../contexts/theme';
-
 import formatPaneName from '../../lib/formatPaneName';
 
 import styles from './Toolbar.sass';
@@ -96,65 +94,58 @@ class Toolbar extends Component {
   }
   render() {
     return (
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <div
-            className={styles.toolbar}
-            style={{
-              borderBottomColor: theme.borderColor
-            }}
-          >
-            <Button
-              className={styles.tool}
-              id={`pane-${this.props.paneIndex}_pane-selector`}
-              onClick={event => this.handleSelector(event)}
-              title={`Pane Selector (${formatPaneName(this.props.paneType, true)})`}
-            >
-              <Icon
-                size={8}
-                type={`${formatPaneName(this.props.paneType).toLowerCase()}-gray`}
-              />
-              <span className={styles.name}>
-                {formatPaneName(this.props.paneType, true)}
-              </span>
-            </Button>
-            <div className={styles.actions}>
-              <IconButton
-                className={styles.action}
-                id={`pane-${this.props.paneIndex}_toggle-sidebar-button`}
-                onClick={() => this.handleSidebar()}
-                paddingHeight={16}
-                paddingWidth={10}
-                size={8}
-                title="Toggle Sidebar"
-                type="sidebar-gray"
-              />
-              <IconButton
-                className={classNames(styles.action, styles.desktopOnly)}
-                id={`pane-${this.props.paneIndex}_split-pane-button`}
-                onClick={() => this.handleSplitPane()}
-                paddingHeight={16}
-                paddingWidth={10}
-                size={8}
-                title="Split Pane"
-                type="add-gray"
-              />
-              <If condition={this.props.paneCount > 1}>
-                <IconButton
-                  className={classNames(styles.action, styles.desktopOnly)}
-                  id={`pane-${this.props.paneIndex}_close-pane-button`}
-                  onClick={() => this.handleClosePane()}
-                  paddingHeight={16}
-                  paddingWidth={10}
-                  size={8}
-                  title="Close Pane"
-                  type="close-gray"
-                />
-              </If>
-            </div>
-          </div>
-        )}
-      </ThemeContext.Consumer>
+      <div
+        className={styles.toolbar}
+      >
+        <Button
+          className={styles.tool}
+          id={`pane-${this.props.paneIndex}_pane-selector`}
+          onClick={event => this.handleSelector(event)}
+          title={`Pane Selector (${formatPaneName(this.props.paneType, true)})`}
+        >
+          <Icon
+            size={8}
+            type={`${formatPaneName(this.props.paneType).toLowerCase()}-gray`}
+          />
+          <span className={styles.name}>
+            {formatPaneName(this.props.paneType, true)}
+          </span>
+        </Button>
+        <div className={styles.actions}>
+          <IconButton
+            className={styles.action}
+            id={`pane-${this.props.paneIndex}_toggle-sidebar-button`}
+            onClick={() => this.handleSidebar()}
+            paddingHeight={16}
+            paddingWidth={10}
+            size={8}
+            title="Toggle Sidebar"
+            type="sidebar-gray"
+          />
+          <IconButton
+            className={classNames(styles.action, styles.desktopOnly)}
+            id={`pane-${this.props.paneIndex}_split-pane-button`}
+            onClick={() => this.handleSplitPane()}
+            paddingHeight={16}
+            paddingWidth={10}
+            size={8}
+            title="Split Pane"
+            type="add-gray"
+          />
+          <If condition={this.props.paneCount > 1}>
+            <IconButton
+              className={classNames(styles.action, styles.desktopOnly)}
+              id={`pane-${this.props.paneIndex}_close-pane-button`}
+              onClick={() => this.handleClosePane()}
+              paddingHeight={16}
+              paddingWidth={10}
+              size={8}
+              title="Close Pane"
+              type="close-gray"
+            />
+          </If>
+        </div>
+      </div>
     );
   }
 }
