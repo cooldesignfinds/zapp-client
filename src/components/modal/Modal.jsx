@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import hideModal from '../../actions/hideModal';
 
-import ChangeIconForm from '../../forms/change-icon/ChangeIconForm';
-
 import IconButton from '../icon-button/IconButton';
 
 import styles from './Modal.sass';
@@ -26,14 +24,7 @@ class Modal extends Component {
               title="Close"
               type="close"
             />
-            <Choose>
-              <When condition={this.props.currentModal === 'changeIcon'}>
-                <ChangeIconForm />
-              </When>
-              <Otherwise>
-                {this.props.content}
-              </Otherwise>
-            </Choose>
+            {this.props.content}
           </div>
         </div>
       </If>

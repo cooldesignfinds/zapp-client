@@ -7,7 +7,6 @@ import { browserHistory } from 'react-router';
 import clearLogs from '../../actions/clearLogs';
 import focusPane from '../../actions/focusPane';
 import generate from '../../actions/generate';
-import loadImports from '../../actions/loadImports';
 import redo from '../../actions/redo';
 import saveProject from '../../actions/saveProject';
 import selectPaneTreeItem from '../../actions/selectPaneTreeItem';
@@ -134,9 +133,6 @@ class MainTemplate extends Component {
     } else if ((event.ctrlKey || event.metaKey) && shortcutKey === 'g') {
       this.props.generate();
       event.preventDefault();
-    } else if ((event.ctrlKey || event.metaKey) && event.shiftKey && shortcutKey === 'r') {
-      this.props.loadImports();
-      event.preventDefault();
     } else if ((event.ctrlKey || event.metaKey) && shortcutKey === 'r') {
       window.location.reload();
       event.preventDefault();
@@ -218,7 +214,6 @@ MainTemplate.defaultProps = {
   clearLogs: () => {},
   focusPane: () => {},
   generate: () => {},
-  loadImports: () => {},
   redo: () => {},
   saveProject: () => {},
   setPaneType: () => {},
@@ -241,7 +236,6 @@ MainTemplate.propTypes = {
   clearLogs: PropTypes.func,
   focusPane: PropTypes.func,
   generate: PropTypes.func,
-  loadImports: PropTypes.func,
   redo: PropTypes.func,
   saveProject: PropTypes.func,
   setPaneType: PropTypes.func,
@@ -267,9 +261,6 @@ function mapDispatchToProps(dispatch) {
     },
     generate: () => {
       dispatch(generate());
-    },
-    loadImports: () => {
-      dispatch(loadImports());
     },
     redo: () => {
       dispatch(redo());

@@ -1,19 +1,11 @@
-import _ from 'lodash';
 import axios from 'axios';
 import Bluebird from 'bluebird';
-import { ProjectAPI } from '@zappjs/sdk';
-
-import expandPaneTreeItem from './expandPaneTreeItem';
-import selectPaneTreeItem from './selectPaneTreeItem';
 
 import action from '../lib/action';
-import getItemPath from '../lib/getItemPath';
-import getItemPathParts from '../lib/getItemPathParts';
 import merge from '../lib/merge';
 import orderedMapToObject from '../lib/orderedMapToObject';
 
 function generateAction({
-  data: { ignoreChanges = false },
   dispatch,
   state
 }) {

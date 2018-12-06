@@ -1,17 +1,8 @@
-import _ from 'lodash';
 import axios from 'axios';
-import yaml from 'js-yaml';
 import { OrderedMap } from 'immutable';
 
 import action from '../lib/action';
-import loadImports from '../lib/loadImports';
 import objectToOrderedMap from '../lib/objectToOrderedMap';
-import orderedMapToObject from '../lib/orderedMapToObject';
-import postMessage from '../lib/postMessage';
-
-import deleteItem from './deleteItem';
-import selectPaneTreeItem from './selectPaneTreeItem';
-import updateItem from './updateItem';
 
 async function loadLocalProject({
   data,

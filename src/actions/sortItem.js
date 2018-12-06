@@ -1,7 +1,4 @@
-import { OrderedMap } from 'immutable';
-
 import generate from './generate';
-import loadImports from './loadImports';
 
 import objectToOrderedMap from '../lib/objectToOrderedMap';
 import orderedMapToObject from '../lib/orderedMapToObject';
@@ -52,11 +49,7 @@ function sortItem({
       paneIndex,
       paneType
     });
-    if (paneType === 'imports') {
-      dispatch(loadImports(items));
-    } else {
-      dispatch(generate());
-    }
+    dispatch(generate());
   };
 }
 

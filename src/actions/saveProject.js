@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { GeneratorAPI } from '@zappjs/sdk';
 
 import action from '../lib/action';
 import orderedMapToObject from '../lib/orderedMapToObject';
@@ -22,41 +21,18 @@ async function saveProject({
     templates: orderedMapToObject(state.project.templates)
   };
 
-  if (state.project.isLocal) {
-    await axios({
-      method: 'post',
-      url: 'http://localhost:12345/saveProject',
-      data: {
-        cwd: state.project.cwd,
-        project
-      }
-    });
-
-    dispatch({
-      type: 'SAVE_PROJECT_RES'
-    });
-
-    return;
-  }
+  await axios({
+    method: 'post',
+    url: 'http://localhost:12345/saveProject',
+    data: {
+      cwd: state.project.cwd,
+      project
+    }
+  });
 
   dispatch({
-    type: 'SAVE_PROJECT_REQ'
+    type: 'SAVE_PROJECT_RES'
   });
-
-  await GeneratorAPI.update({
-    params: {
-      id: state.project.id,
-      version: state.project.version,
-      configuration: state.project.configuration
-    },
-    body: project
-  });
-
-  setTimeout(() => {
-    dispatch({
-      type: 'SAVE_PROJECT_RES'
-    });
-  }, 500);
 }
 
 export default action(saveProject);

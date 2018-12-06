@@ -1,7 +1,5 @@
 import { OrderedMap } from 'immutable';
 
-import loadImports from './loadImports';
-
 import getItemPathParts from '../lib/getItemPathParts';
 import getItemType from '../lib/getItemType';
 import objectToOrderedMap from '../lib/objectToOrderedMap';
@@ -9,8 +7,7 @@ import orderedMapToObject from '../lib/orderedMapToObject';
 
 function deleteItem({
   paneType,
-  itemPathParts,
-  generate
+  itemPathParts
 }) {
   return (dispatch, getState) => {
     const state = getState();
@@ -64,9 +61,6 @@ function deleteItem({
       meta: newMeta,
       paneType
     });
-    if (paneType === 'imports') {
-      dispatch(loadImports(newItems, generate));
-    }
   };
 }
 
