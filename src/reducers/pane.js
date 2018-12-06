@@ -38,26 +38,26 @@ const initialState = {
         newItemPath: ''
       }
     },
-    {
-      type: 'code',
-      width: 50,
-      recentPaths: ['/'],
-      path: [],
-      tree: {
-        open: true,
-        expandedItems: [],
-        newItem: {
-          key: '',
-          url: '',
-          type: '',
-          value: ''
-        },
-        selectedItem: '/'
-      },
-      editor: {
-        expandedItems: []
-      }
-    }
+    // {
+    //   type: 'code',
+    //   width: 50,
+    //   recentPaths: ['/'],
+    //   path: [],
+    //   tree: {
+    //     open: true,
+    //     expandedItems: [],
+    //     newItem: {
+    //       key: '',
+    //       url: '',
+    //       type: '',
+    //       value: ''
+    //     },
+    //     selectedItem: '/'
+    //   },
+    //   editor: {
+    //     expandedItems: []
+    //   }
+    // }
   ]
 };
 

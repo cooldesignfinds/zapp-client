@@ -78,18 +78,20 @@ class ProjectActions extends Component {
     const folder = getWorkspaceDir(`${this.props.projectAuthorUsername}/${this.props.projectName}/${this.props.projectVersion}/${this.props.projectConfiguration}`);
     return (
       <Fragment>
-        <li className={styles.folder}>
-          <IconButton
-            buttonRef={(ref) => { this.helpButton = ref; }}
-            id="help-button"
-            onClick={() => this.toggleHelpMenu()}
-            paddingHeight={12}
-            paddingWidth={12}
-            size={12}
-            title="Help"
-            type="help-gray"
-          />
-        </li>
+        <If condition={false}>
+          <li className={styles.folder}>
+            <IconButton
+              buttonRef={(ref) => { this.helpButton = ref; }}
+              id="help-button"
+              onClick={() => this.toggleHelpMenu()}
+              paddingHeight={12}
+              paddingWidth={12}
+              size={12}
+              title="Help"
+              type="help-gray"
+            />
+          </li>
+        </If>
         <If condition={false}>
           <li className={styles.folder}>
             <IconButton
