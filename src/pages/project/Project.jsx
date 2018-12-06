@@ -40,30 +40,6 @@ class ProjectPage extends Component {
       projectUrl: cwd
     };
   }
-  getRightSection() {
-    if (this.state.rightSection) {
-      return this.state.rightSection;
-    }
-    return 'code';
-  }
-  handleGenerate() {
-    this.props.generate();
-  }
-  toggleAdd(itemPathParts) {
-    this.setState({
-      addSpecPath: itemPathParts
-    });
-  }
-  toggleLeftSection(leftSection) {
-    this.setState({
-      leftSection
-    });
-  }
-  toggleRightSection(rightSection) {
-    this.setState({
-      rightSection
-    });
-  }
   render() {
     if (this.props.isLoading) {
       return (
@@ -85,7 +61,7 @@ class ProjectPage extends Component {
               key={`pane-${paneIndex}`}
               onChangeType={type => this.handleChangeType(type, paneIndex)}
               projectUrl={this.state.projectUrl}
-              readOnly={pane.readOnly === true || this.props.projectAuthorId !== this.props.userId}
+              readOnly={pane.readOnly === true}
               schemas={schemasMap[pane.type] || this.props.allSchemas}
               type={pane.type}
               width={paneWidth}
@@ -109,13 +85,10 @@ ProjectPage.defaultProps = {
   isLoading: false,
   logs: OrderedMap(),
   panes: [],
-  params: {},
-  projectAuthorId: '',
   router: {},
   schemas: OrderedMap(),
   specs: OrderedMap(),
   templates: OrderedMap(),
-  userId: '',
   // dispatch props
   generate: () => {},
   loadLocalProject: () => {}
@@ -132,13 +105,10 @@ ProjectPage.propTypes = {
   isLoading: PropTypes.bool,
   logs: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
   panes: PropTypes.array,
-  params: PropTypes.object,
-  projectAuthorId: PropTypes.string,
   router: PropTypes.object,
   schemas: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
   specs: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
   templates: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
-  userId: PropTypes.string,
   // dispatch props
   generate: PropTypes.func,
   loadLocalProject: PropTypes.func
@@ -156,11 +126,9 @@ function mapStateToProps(state) {
     isLoading: state.project.isLoading,
     logs: state.project.logs,
     panes: state.pane.items,
-    projectAuthorId: state.project.author && state.project.author.id ? state.project.author.id : '',
     schemas: state.project.schemas,
     specs: state.project.specs,
-    templates: state.project.templates,
-    userId: state.user.id
+    templates: state.project.templates
   };
 }
 

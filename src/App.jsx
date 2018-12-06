@@ -5,15 +5,9 @@ import thunk from 'redux-thunk';
 
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { render } from 'react-dom';
-import { IndexRoute, Router, Route, useRouterHistory } from 'react-router';
+import { Router, Route, useRouterHistory } from 'react-router';
 import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
-
-import openProject from './actions/openProject';
-import saveProject from './actions/saveProject';
-import setDevice from './actions/setDevice';
-import setFile from './actions/setFile';
-import updateTerminalOutput from './actions/updateTerminalOutput';
 
 import { ThemeContext, themes } from './contexts/theme';
 
@@ -35,9 +29,6 @@ import tutorialReducer from './reducers/tutorial';
 import userReducer from './reducers/user';
 import userGeneratorsReducer from './reducers/userGenerators';
 
-import NewPage from './pages/new/New';
-import NotFoundPage from './pages/not-found/NotFound';
-import OpenPage from './pages/open/Open';
 import ProjectPage from './pages/project/Project';
 
 import MainTemplate from './templates/main/Main';
@@ -79,27 +70,6 @@ const store = createStore(
     router
   )
 );
-window.actions = {
-  openProject,
-  saveProject: () => {
-    store.dispatch(saveProject());
-  },
-  setDevice,
-  setFile,
-  updateTerminalOutput: (data) => {
-    store.dispatch(updateTerminalOutput(data));
-  }
-};
-window.handlers = {};
-window.onError = (message) => {
-  window.handlers[message.id].reject(message.data);
-  delete window.handlers[message.id];
-};
-window.onSuccess = (message) => {
-  window.handlers[message.id].resolve(message.data);
-  delete window.handlers[message.id];
-};
-window.store = store;
 
 const history = syncHistoryWithStore(
   browserHistory,
