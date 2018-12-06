@@ -180,10 +180,9 @@ class Editor extends Component {
           const itemPathParts = parentItemPathParts.slice(0).concat([itemKey]);
           const itemPath = getItemPath(itemPathParts);
           const itemMode = itemType === 'code' ? itemValue.mode : '';
-          const isExpandable = ['array', 'object'].includes(itemType);
+          const isExpandable = ['array', 'code', 'object'].includes(itemType);
           const isSelected = false;
-          const isExpanded = this.props.expandedItems
-            .some(expandedPath => itemPath === expandedPath);
+          const isExpanded = this.props.expandedItems.some(expandedPath => itemPath === expandedPath);
 
           const isCollapsed = this.state.collapsedPaths.reduce((accum, expandedPath) => {
             if (accum === true || itemPath === getItemPath(expandedPath)) {
@@ -194,6 +193,8 @@ class Editor extends Component {
 
           let isEmpty = true;
           if (
+            itemType === 'code'
+            ||
             (itemValue instanceof List && itemValue.size > 0)
             ||
             (itemValue instanceof OrderedMap && itemValue.size > 0)

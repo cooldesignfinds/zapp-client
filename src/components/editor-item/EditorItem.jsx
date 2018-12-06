@@ -1196,7 +1196,7 @@ class EditorItem extends Component {
           }}
         >
           <Choose>
-            <When condition={currentItemType !== 'array' && currentItemType !== 'object'}>
+            <When condition={currentItemType !== 'array' && currentItemType !== 'code' && currentItemType !== 'object'}>
               <SelectField
                 className={classNames(styles.type, styles[currentItemType])}
                 onChange={newItemType => this.handleTypeChange(newItemType)}
@@ -1351,7 +1351,7 @@ class EditorItem extends Component {
               type="more-gray"
             />
           </If>
-          <If condition={currentItemType === 'code'}>
+          <If condition={currentItemType === 'code' && this.props.isExpanded}>
             <div style={{ padding: '0 0 0 18px' }}>
               <Code
                 defaultValue={itemValuePrint}
