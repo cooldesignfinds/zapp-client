@@ -634,8 +634,6 @@ class EditorItem extends Component {
       });
     }
 
-    this.props.generate();
-
     this.props.resetNewItemPath();
     this.props.hideSelector();
 
