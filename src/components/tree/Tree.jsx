@@ -118,7 +118,7 @@ class Tree extends Component {
                 iconType = 'arrow-gray';
               }
             } else if (isSelected) {
-              iconType = 'arrow-black';
+              iconType = 'arrow-white';
             } else {
               iconType = 'arrow';
             }
