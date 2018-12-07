@@ -625,11 +625,16 @@ class EditorItem extends Component {
       this.setState({
         changeKey: '',
         changeMode: '',
-        changeValue: ''
+        changeValue: '',
+        isChanging: false
       });
-    } else if (!this.props.isNew || event.target.name === 'value') {
-      this.props.generate();
+    } else {
+      this.setState({
+        isChanging: false
+      });
     }
+
+    this.props.generate();
 
     this.props.resetNewItemPath();
     this.props.hideSelector();
