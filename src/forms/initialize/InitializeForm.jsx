@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import changeWorkspace from '../../actions/changeWorkspace';
+import initialize from '../../actions/initialize';
 import hideModal from '../../actions/hideModal';
 
 import Form from '../../components/form/Form';
@@ -12,9 +12,9 @@ import TextField from '../../components/text-field/TextField';
 
 import isDesktop from '../../lib/isDesktop';
 
-import styles from './WorkspaceForm.sass';
+import styles from './InitializeForm.sass';
 
-class WorkspaceForm extends Component {
+class InitializeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,52 +27,54 @@ class WorkspaceForm extends Component {
     });
   }
   handleSubmit() {
-    this.props.changeWorkspace({
-      workspace: this.state.workspace
-    });
+    this.props.initialize();
     this.props.hideModal();
   }
   render() {
     return (
       <Form className={styles.workspace} onSubmit={() => this.handleSubmit()}>
-        <h2>Change Workspace</h2>
-        <p>This is where all of your generated code will end up.</p>
+        <h2>Initialize Project</h2>
+        <p>This will initialize ZAPP in the following directory:</p>
+        <p>{this.props.projectCwd}</p>
         <If condition={!isDesktop()}>
           <p>
             <b>This feature only affects the desktop version of ZappJS.</b>
           </p>
         </If>
-        <TextField
-          autoFocus
-          disabled={!isDesktop()}
-          label="Workspace Directory"
-          name="workspace"
-          onChange={e => this.handleInput(e)}
-          type="text"
-          value={this.state.workspace}
-        />
         <SubmitButton disabled={!isDesktop()}>
-          Set Workspace
+          Initialize Project
         </SubmitButton>
       </Form>
     );
   }
 }
 
-WorkspaceForm.defaultProps = {
-  changeWorkspace: () => {},
+InitializeForm.defaultProps = {
+  // state props
+  projectCwd: '',
+  // dispatch props
+  initialize: () => {},
   hideModal: () => {}
 };
 
-WorkspaceForm.propTypes = {
-  changeWorkspace: PropTypes.func,
+InitializeForm.propTypes = {
+  // state props
+  projectCwd: PropTypes.string,
+  // dispatch props
+  initialize: PropTypes.func,
   hideModal: PropTypes.func
 };
 
+function mapStateToProps(state) {
+  return {
+    projectCwd: state.project.cwd
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
-    changeWorkspace: (opts) => {
-      dispatch(changeWorkspace(opts));
+    initialize: (opts) => {
+      dispatch(initialize(opts));
     },
     hideModal: (opts) => {
       dispatch(hideModal(opts));
@@ -80,4 +82,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(WorkspaceForm);
+export default connect(mapStateToProps, mapDispatchToProps)(InitializeForm);

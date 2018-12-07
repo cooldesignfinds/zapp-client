@@ -104,7 +104,8 @@ async function loadLocalProject({
     const errorMessage = error.response ? error.response.data.message : error.message;
     dispatch({
       type: 'LOAD_PROJECT_ERR',
-      error: `${errorMessage}: ${data.cwd}`
+      error: `${errorMessage}: ${data.cwd}`,
+      skipLogging: true
     });
   }
 }

@@ -7,7 +7,7 @@ function logReducer(state = initialState, action) {
     return initialState;
   }
 
-  if (!/(_ERR|_RES)$/.test(action.type)) {
+  if (!/(_ERR|_RES)$/.test(action.type) || action.skipLogging) {
     return state;
   }
 

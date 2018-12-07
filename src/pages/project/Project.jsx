@@ -9,7 +9,10 @@ import loadLocalProject from '../../actions/loadLocalProject';
 
 import Engines from '../../components/engines/Engines';
 import Loader from '../../components/loader/Loader';
+import Notice from '../../components/notice/Notice';
 import Pane from '../../components/pane/Pane';
+
+import InitializeForm from '../../forms/initialize/InitializeForm';
 
 import configsSchema from '../../schemas/configs';
 import enginesSchema from '../../schemas/engines';
@@ -45,6 +48,16 @@ class ProjectPage extends Component {
     if (this.props.isLoading) {
       return (
         <Loader text="Loading Generator..." />
+      );
+    }
+
+    if (/initialize/.test(this.props.error)) {
+      return (
+        <InitializeForm />
+      );
+    } else if (this.props.error) {
+      return (
+        <Notice type="error" title="Error" message={this.props.error} />
       );
     }
 
@@ -90,6 +103,8 @@ ProjectPage.defaultProps = {
   schemas: OrderedMap(),
   specs: OrderedMap(),
   templates: OrderedMap(),
+  // state props
+  error: '',
   // dispatch props
   generate: () => {},
   loadLocalProject: () => {}
@@ -110,6 +125,8 @@ ProjectPage.propTypes = {
   schemas: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
   specs: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
   templates: PropTypes.instanceOf(OrderedMap), // eslint-disable-line react/no-unused-prop-types
+  // state props
+  error: PropTypes.string,
   // dispatch props
   generate: PropTypes.func,
   loadLocalProject: PropTypes.func
@@ -121,6 +138,7 @@ function mapStateToProps(state) {
     configs: state.project.configs,
     code: state.project.code,
     engines: state.project.engines,
+    error: state.project.error,
     files: state.project.files,
     generators: state.project.generators,
     imports: state.project.imports,
