@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { render } from 'react-dom';
-import { Router, Route, useRouterHistory } from 'react-router';
+import { IndexRoute, Router, Route, useRouterHistory } from 'react-router';
 import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 
@@ -70,6 +70,7 @@ class App extends React.Component {
       <Provider store={store}>
         <Router history={history}>
           <Route path={CONFIG.baseHref} component={MainTemplate}>
+            <IndexRoute component={ProjectPage} />
             <Route path="*" component={ProjectPage} />
           </Route>
         </Router>

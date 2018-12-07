@@ -1,3 +1,4 @@
+import * as path from 'path';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -32,7 +33,7 @@ class ProjectPage extends Component {
   constructor(props) {
     super(props);
 
-    const cwd = `/${this.props.router.location.pathname}`;
+    const cwd = path.normalize(`/${this.props.router.location.pathname}`);
 
     this.props.loadLocalProject({ cwd });
 

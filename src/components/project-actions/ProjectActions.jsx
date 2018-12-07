@@ -92,6 +92,7 @@ class ProjectActions extends Component {
             />
           </If>
           <IconButton
+            disabled={this.props.projectVersion !== 'latest'}
             onClick={() => this.handleGenerate()}
             id="generate-button"
             paddingHeight={12}
