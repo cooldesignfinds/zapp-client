@@ -92,9 +92,20 @@ class EditorItem extends Component {
       document.getElementById(`pane-${this.props.paneIndex}_editor-item_${this.props.itemPath}/_key`).focus();
     }, 100);
   }
-  handleBlur() {
+  handleBlur(event) {
+    let isChanging = false;
+    if (
+      (event.target.name === 'key' && event.target.value !== this.props.itemKey)
+      ||
+      (event.target.name === 'value' && event.target.value !== this.props.itemValue)
+      ||
+      (event.target.name === 'mode' && event.target.value !== this.props.itemMode)
+    ) {
+      isChanging = true;
+    }
     this.setState({
-      hasFocus: false
+      hasFocus: false,
+      isChanging
     });
   }
   handleChange(event) {
@@ -638,7 +649,9 @@ class EditorItem extends Component {
     this.props.hideSelector();
 
     if (document.activeElement) {
-      document.activeElement.blur();
+      setTimeout(() => {
+        document.activeElement.blur();
+      }, 100);
     }
   }
   handleSuggestions(event, properties = [], ignoreProperties = [], newValue = '', field, selectionDirection) {
@@ -1242,12 +1255,13 @@ class EditorItem extends Component {
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
+            className={this.state.isChanging ? styles.isChanging : null}
             disabled={
               parentItemType === 'array' || this.props.readOnly
             }
             id={keyId}
             name="key"
-            onBlur={() => this.handleBlur()}
+            onBlur={event => this.handleBlur(event)}
             onChange={event => this.handleChange(event)}
             onFocus={event => this.handleFocus(event)}
             onKeyDown={event => this.handleShortcuts(event)}
@@ -1274,14 +1288,15 @@ class EditorItem extends Component {
               autoCapitalize="off"
               className={classNames(
                 styles.value,
-                styles[currentItemType]
+                styles[currentItemType],
+                this.state.isChanging ? styles.isChanging : null
               )}
               disabled={
                 this.props.readOnly
               }
               id={valueId}
               name="value"
-              onBlur={() => this.handleBlur()}
+              onBlur={event => this.handleBlur(event)}
               onChange={event => this.handleChange(event)}
               onFocus={event => this.handleFocus(event)}
               onKeyDown={event => this.handleShortcuts(event)}
@@ -1306,14 +1321,15 @@ class EditorItem extends Component {
               autoCorrect="off"
               autoCapitalize="off"
               className={classNames(
-                styles[currentItemType]
+                styles[currentItemType],
+                this.state.isChanging ? styles.isChanging : null
               )}
               disabled={
                 parentItemType === 'array' || this.props.readOnly
               }
               id={modeId}
               name="mode"
-              onBlur={() => this.handleBlur()}
+              onBlur={event => this.handleBlur(event)}
               onChange={event => this.handleChange(event)}
               onFocus={event => this.handleFocus(event)}
               onKeyDown={event => this.handleShortcuts(event)}
