@@ -40,22 +40,24 @@ export default function mutateMeta({
       r.setIn([paneType, itemPath, 'type'], 'link');
     } else if (newItemType === 'object') {
       r.setIn([paneType, itemPath, 'keys'], []);
-      [...itemValue.keys()].forEach((key) => {
-        const childPathParts = itemPathParts.concat(key);
-        const childPath = getItemPath(childPathParts);
-        const childValue = itemValue.get(key);
-        mutateMeta({
-          r,
-          paneType,
-          itemPath: childPath,
-          itemPathParts: childPathParts,
-          itemValue: childValue,
-          newItems,
-          parentItemPath: itemPath,
-          parentItemPathParts: itemPathParts,
-          parentItemType: 'object'
+      if (itemValue instanceof OrderedMap) {
+        [...itemValue.keys()].forEach((key) => {
+          const childPathParts = itemPathParts.concat(key);
+          const childPath = getItemPath(childPathParts);
+          const childValue = itemValue.get(key);
+          mutateMeta({
+            r,
+            paneType,
+            itemPath: childPath,
+            itemPathParts: childPathParts,
+            itemValue: childValue,
+            newItems,
+            parentItemPath: itemPath,
+            parentItemPathParts: itemPathParts,
+            parentItemType: 'object'
+          });
         });
-      });
+      }
     }
   } else if (r.hasIn([paneType, itemPath])) {
     r.deleteIn([paneType, itemPath]);
