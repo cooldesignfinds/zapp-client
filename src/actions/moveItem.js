@@ -4,6 +4,7 @@ import getItemPath from '../lib/getItemPath';
 import getItemType from '../lib/getItemType';
 import objectToOrderedMap from '../lib/objectToOrderedMap';
 import orderedMapToObject from '../lib/orderedMapToObject';
+import mutateMeta from '../lib/mutateMeta';
 
 function moveItem({
   paneType,
@@ -17,24 +18,25 @@ function moveItem({
     const meta = state.project.meta;
 
     const srcItemKey = srcItemPathParts.slice(-1)[0];
-    const srcItemParentPath = srcItemPathParts.slice(0, -1);
-    const srcItemParentId = getItemPath(srcItemParentPath);
-    const srcItemParent = srcItemParentPath.length ? items.getIn(srcItemParentPath) : items;
+    const srcItemParentPathParts = srcItemPathParts.slice(0, -1);
+    const srcItemParentPath = getItemPath(srcItemParentPathParts);
+    const srcItemParent = srcItemParentPathParts.length ? items.getIn(srcItemParentPathParts) : items;
     const srcItemParentType = getItemType(srcItemParent);
     const value = items.getIn(srcItemPathParts);
+    const srcItemType = getItemType(value);
 
     const targetItemKey = targetItemPathParts.slice(-1)[0];
-    const targetItemParentPath = targetItemPathParts.slice(0, -1);
-    const targetItemParentId = getItemPath(targetItemParentPath);
-    const targetItemParent = targetItemParentPath.length
-      ? items.getIn(targetItemParentPath) : items;
+    const targetItemParentPathParts = targetItemPathParts.slice(0, -1);
+    const targetItemParentPath = getItemPath(targetItemParentPathParts);
+    const targetItemParent = targetItemParentPathParts.length
+      ? items.getIn(targetItemParentPathParts) : items;
     const targetItemParentType = getItemType(targetItemParent);
 
     let newItems = items;
 
     let newParentItem;
     // same parent
-    if (srcItemParentId === targetItemParentId) {
+    if (srcItemParentPath === targetItemParentPath) {
       if (srcItemParentType === 'array') {
         newParentItem = List();
         srcItemParent.forEach((element) => {
@@ -53,8 +55,8 @@ function moveItem({
         });
         newParentItem = newParentItem.set(srcItemKey, value);
       }
-      newItems = srcItemParentPath.length
-        ? items.setIn(srcItemParentPath, newParentItem)
+      newItems = srcItemParentPathParts.length
+        ? items.setIn(srcItemParentPathParts, newParentItem)
         : newParentItem;
 
     // different parent
@@ -76,25 +78,52 @@ function moveItem({
         });
         newParentItem = newParentItem.set(srcItemKey, value);
       }
-      newItems = targetItemParentPath.length
-        ? items.setIn(targetItemParentPath, newParentItem)
+      newItems = targetItemParentPathParts.length
+        ? items.setIn(targetItemParentPathParts, newParentItem)
         : newParentItem;
       newItems = newItems.deleteIn(srcItemPathParts);
     }
 
-    let newMeta = meta;
-    if (targetItemParentType === 'object') {
-      if (!newMeta.has(paneType)) {
-        newMeta = newMeta.set(paneType, OrderedMap());
-      }
-      if (!newMeta.hasIn([paneType, targetItemParentId])) {
-        newMeta = newMeta.setIn([paneType, targetItemParentId], OrderedMap());
-      }
-      newMeta = newMeta.setIn([paneType, targetItemParentId, 'keys'], [...newItems.getIn(targetItemParentPath).keys()]);
-      if (paneType === 'meta') {
-        newItems = newMeta;
-      }
-    }
+    const newMeta = meta
+      .withMutations((r) => {
+        const srcItemMetaPathParts = [paneType, getItemPath(srcItemPathParts)];
+        if (r.hasIn(srcItemMetaPathParts)) {
+          r.setIn([paneType, getItemPath(targetItemParentPathParts.concat(srcItemKey))], r.getIn(srcItemMetaPathParts));
+          r.deleteIn(srcItemMetaPathParts);
+        }
+
+        if (srcItemType === 'object') {
+          [...value.keys()].forEach((key) => {
+            const currentPathParts = targetItemParentPathParts.concat(srcItemKey).concat(key);
+            const currentPath = getItemPath(currentPathParts);
+            const currentValue = value.get(key);
+            mutateMeta({
+              r,
+              paneType,
+              itemPath: currentPath,
+              itemPathParts: currentPathParts,
+              itemValue: currentValue,
+              newItems,
+              parentItemPath: getItemPath(targetItemParentPathParts.concat(srcItemKey)),
+              parentItemPathParts: targetItemParentPathParts.concat(srcItemKey),
+              parentItemType: 'object'
+            });
+          });
+        }
+
+        if (targetItemParentType === 'object') {
+          if (!r.has(paneType)) {
+            r.set(paneType, OrderedMap());
+          }
+          if (!r.hasIn([paneType, targetItemParentPath])) {
+            r.setIn([paneType, targetItemParentPath], OrderedMap());
+          }
+          r.setIn([paneType, targetItemParentPath, 'keys'], [...newItems.getIn(targetItemParentPathParts).keys()]);
+          if (paneType === 'meta') {
+            newItems = r;
+          }
+        }
+      });
 
     newItems = objectToOrderedMap(orderedMapToObject(newItems), newMeta.get(paneType));
 
