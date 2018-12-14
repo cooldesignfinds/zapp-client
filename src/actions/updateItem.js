@@ -7,6 +7,92 @@ import orderedMapToObject from '../lib/orderedMapToObject';
 
 import getItemType from '../lib/getItemType';
 import getItemPath from '../lib/getItemPath';
+import getItemPathParts from '../lib/getItemPathParts';
+
+function cleanMeta({
+  r,
+  newItems,
+  paneType
+}) {
+  if (r.has('specs')) {
+    const specs = r.get('specs');
+    [...specs.keys()].forEach((specItemPath) => {
+      const specItemPathParts = getItemPathParts(specItemPath);
+      const spec = newItems.getIn(specItemPathParts);
+      const specItemType = specs.hasIn([specItemPath, 'type'])
+        ? specs.getIn([specItemPath, 'type'])
+        : getItemType(spec);
+      if (!['code', 'link', 'object'].includes(specItemType)) {
+        r.deleteIn([paneType, specItemPath]);
+      }
+    });
+  }
+}
+
+function mutateMeta({
+  r,
+  paneType,
+  itemMode,
+  itemPath,
+  itemPathParts,
+  itemValue,
+  itemType,
+  newItems,
+  parentItemPath,
+  parentItemPathParts,
+  parentItemType
+}) {
+  const newItemType = itemType || (
+    r.hasIn([paneType, itemPath, 'type'])
+      ? r.getIn([paneType, itemPath, 'type'])
+      : getItemType(itemValue)
+  );
+  if (!r.has(paneType)) {
+    r.set(paneType, OrderedMap());
+  }
+  if (['code', 'link', 'object'].includes(newItemType)) {
+    if (!r.hasIn([paneType, itemPath])) {
+      r.setIn([paneType, itemPath], OrderedMap());
+    }
+    if (newItemType === 'code') {
+      const newItemMode = itemMode || (
+        r.hasIn([paneType, itemPath, 'mode'])
+          ? r.getIn([paneType, itemPath, 'mode'])
+          : itemValue.mode
+      );
+      r.setIn([paneType, itemPath, 'type'], 'code');
+      r.setIn([paneType, itemPath, 'mode'], newItemMode);
+    } else if (newItemType === 'link') {
+      r.setIn([paneType, itemPath, 'type'], 'link');
+    } else if (newItemType === 'object') {
+      r.setIn([paneType, itemPath, 'keys'], []);
+      [...itemValue.keys()].forEach((key) => {
+        const childPathParts = itemPathParts.concat(key);
+        const childPath = getItemPath(childPathParts);
+        const childValue = itemValue.get(key);
+        mutateMeta({
+          r,
+          paneType,
+          itemPath: childPath,
+          itemPathParts: childPathParts,
+          itemValue: childValue,
+          newItems,
+          parentItemPath: itemPath,
+          parentItemPathParts: itemPathParts,
+          parentItemType: 'object'
+        });
+      });
+    }
+  } else if (r.hasIn([paneType, itemPath])) {
+    r.deleteIn([paneType, itemPath]);
+  }
+  if (!r.hasIn([paneType, parentItemPath])) {
+    r.setIn([paneType, parentItemPath], OrderedMap());
+  }
+  if (parentItemType === 'object') {
+    r.setIn([paneType, parentItemPath, 'keys'], [...newItems.getIn(parentItemPathParts).keys()]);
+  }
+}
 
 function updateItem({
   paneIndex = 0,
@@ -92,57 +178,28 @@ function updateItem({
       ? meta
       : meta
         .withMutations((r) => {
-          const newItemType = itemType || (
-            r.hasIn([paneType, itemPath, 'type'])
-              ? r.getIn([paneType, itemPath, 'type'])
-              : getItemType(itemValue)
-          );
-          if (!r.has(paneType)) {
-            r.set(paneType, OrderedMap());
-          }
-          if (['code', 'link', 'object'].includes(newItemType)) {
-            if (!r.hasIn([paneType, itemPath])) {
-              r.setIn([paneType, itemPath], OrderedMap());
-            }
-            if (newItemType === 'code') {
-              const newItemMode = itemMode || (
-                r.hasIn([paneType, itemPath, 'mode'])
-                  ? r.getIn([paneType, itemPath, 'mode'])
-                  : itemValue.mode
-              );
-              r.setIn([paneType, itemPath, 'type'], 'code');
-              r.setIn([paneType, itemPath, 'mode'], newItemMode);
-            } else if (newItemType === 'link') {
-              r.setIn([paneType, itemPath, 'type'], 'link');
-            } else if (newItemType === 'object') {
-              r.setIn([paneType, itemPath, 'keys'], []);
-            }
-          } else if (r.hasIn([paneType, itemPath])) {
-            r.deleteIn([paneType, itemPath]);
-          }
-          if (!r.hasIn([paneType, parentItemPath])) {
-            r.setIn([paneType, parentItemPath], OrderedMap());
-          }
-          if (parentItemType === 'object') {
-            r.setIn([paneType, parentItemPath, 'keys'], [...newItems.getIn(parentItemPathParts).keys()]);
-          }
-        });
+          mutateMeta({
+            r,
+            paneType,
+            itemMode,
+            itemPath,
+            itemPathParts,
+            itemValue,
+            itemType,
+            newItems,
+            parentItemPath,
+            parentItemPathParts,
+            parentItemType
+          });
+        })
         // clean up meta
-        // .withMutations((r) => {
-        //   if (r.has('specs')) {
-        //     const specs = r.get('specs');
-        //     [...specs.keys()].forEach((specItemPath) => {
-        //       const specItemPathParts = getItemPathParts(specItemPath);
-        //       const spec = newItems.getIn(specItemPathParts);
-        //       const specItemType = specs.hasIn([specItemPath, 'type'])
-        //         ? specs.getIn([specItemPath, 'type'])
-        //         : getItemType(spec);
-        //       if (!['code', 'link', 'object'].includes(specItemType)) {
-        //         r.deleteIn([paneType, specItemPath]);
-        //       }
-        //     });
-        //   }
-        // });
+        .withMutations((r) => {
+          cleanMeta({
+            r,
+            newItems,
+            paneType
+          });
+        });
 
     const newItemsWithMeta = paneType === 'code'
       ? objectToOrderedMap(
