@@ -1194,6 +1194,7 @@ class EditorItem extends Component {
 
     return (
       <li
+        className={this.state.isChanging ? styles.isChanging : null}
         draggable
         key={itemPath}
         onDragEnd={this.props.onDragEnd}
@@ -1255,7 +1256,6 @@ class EditorItem extends Component {
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
-            className={this.state.isChanging ? styles.isChanging : null}
             disabled={
               parentItemType === 'array' || this.props.readOnly
             }
@@ -1288,8 +1288,7 @@ class EditorItem extends Component {
               autoCapitalize="off"
               className={classNames(
                 styles.value,
-                styles[currentItemType],
-                this.state.isChanging ? styles.isChanging : null
+                styles[currentItemType]
               )}
               disabled={
                 this.props.readOnly
@@ -1321,8 +1320,7 @@ class EditorItem extends Component {
               autoCorrect="off"
               autoCapitalize="off"
               className={classNames(
-                styles[currentItemType],
-                this.state.isChanging ? styles.isChanging : null
+                styles[currentItemType]
               )}
               disabled={
                 parentItemType === 'array' || this.props.readOnly
