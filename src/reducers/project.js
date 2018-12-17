@@ -398,7 +398,7 @@ function projectReducer(state = initialState, action) {
       const newState = {
         ...state,
         [action.paneType]: action.items,
-        hasUnsavedChanges: action.paneType !== 'code',
+        hasUnsavedChanges: action.paneType !== 'code' ? true : state.hasUnsavedChanges,
         historyIndex: action.paneType === 'code' ? state.historyIndex : state.historyIndex + 1,
         meta: action.meta
       };
