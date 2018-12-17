@@ -1194,7 +1194,6 @@ class EditorItem extends Component {
 
     return (
       <li
-        className={this.state.isChanging ? styles.isChanging : null}
         draggable
         key={itemPath}
         onDragEnd={this.props.onDragEnd}
@@ -1204,8 +1203,10 @@ class EditorItem extends Component {
       >
         <form
           className={classNames(
+            styles.form,
             isNew ? styles.newItem : null,
-            isNew && this.state.hasFocus ? styles.newItemFocus : null
+            isNew && this.state.hasFocus ? styles.newItemFocus : null,
+            this.state.isChanging ? styles.isChanging : null
           )}
           onSubmit={event => this.handleSubmit(event)}
           style={{

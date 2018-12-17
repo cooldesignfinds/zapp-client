@@ -1,7 +1,7 @@
 import AceEditor from 'react-ace';
 import brace from 'brace';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import 'brace/mode/actionscript';
@@ -96,11 +96,17 @@ class Code extends Component {
     });
   }
   handleChange(value) {
+    if (this.props.readOnly) {
+      return;
+    }
     this.setState({
       changeValue: value
     });
   }
   handleFocus() {
+    if (this.props.readOnly) {
+      return;
+    }
     this.setState({
       isChanging: true,
       changeValue: this.props.value || ''
@@ -111,33 +117,40 @@ class Code extends Component {
       ? this.state.changeValue
       : (this.props.value || '');
     return (
-      <AceEditor
-        defaultValue={this.props.defaultValue || ''}
-        editorProps={{ $blockScrolling: true }}
-        height={
-          this.props.height === 'auto'
-            ? `${
-              12 + (
-                12 * (value.match(/\n/g) || []).length
-              )
-            }px`
-            : this.props.height
-        }
-        mode={this.props.mode || 'text'}
-        name={this.props.id}
-        onBlur={() => this.handleBlur()}
-        onChange={changeValue => this.handleChange(changeValue)}
-        onFocus={() => this.handleFocus()}
-        readOnly={this.props.readOnly}
-        style={{
-          fontFamily: 'Inconsolata'
-        }}
-        tabSize={2}
-        theme="tomorrow_night_eighties"
-        useSoftTabs={false}
-        value={value}
-        width={this.props.width}
-      />
+      <Fragment>
+        <AceEditor
+          defaultValue={this.props.defaultValue || ''}
+          editorProps={{ $blockScrolling: true }}
+          height={
+            this.props.height === 'auto'
+              ? `${
+                12 + (
+                  12 * (value.match(/\n/g) || []).length
+                )
+              }px`
+              : this.props.height
+          }
+          mode={this.props.mode || 'text'}
+          name={this.props.id}
+          onBlur={() => this.handleBlur()}
+          onChange={changeValue => this.handleChange(changeValue)}
+          onFocus={() => this.handleFocus()}
+          readOnly={this.props.readOnly}
+          style={{
+            fontFamily: 'Inconsolata'
+          }}
+          tabSize={2}
+          theme="tomorrow_night_eighties"
+          useSoftTabs={false}
+          value={value}
+          width={this.props.width}
+        />
+        <If condition={this.props.readOnly}>
+          <div className={styles.readOnly}>
+            Read-Only
+          </div>
+        </If>
+      </Fragment>
     );
   }
 }

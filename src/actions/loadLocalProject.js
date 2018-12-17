@@ -1,7 +1,9 @@
+import _ from 'lodash';
 import axios from 'axios';
 import { OrderedMap } from 'immutable';
 
 import action from '../lib/action';
+import getItemPathParts from '../lib/getItemPathParts';
 import objectToOrderedMap from '../lib/objectToOrderedMap';
 
 async function loadLocalProject({
@@ -42,13 +44,13 @@ async function loadLocalProject({
       })
     ).data;
 
-    const codeItems = {};
+    let codeItems = {};
     const codeFiles = {};
     let codeMeta = OrderedMap();
     const zappData = result.data.project;
 
     items.forEach((item) => {
-      codeItems[item.name] = item.type === 'dir' ? {} : '';
+      codeItems = _.set(codeItems, getItemPathParts(item.name), item.type === 'dir' ? {} : '');
       if (item.type === 'dir') {
         codeMeta = codeMeta.set(item.name, objectToOrderedMap({
           isEmpty: item.isEmpty

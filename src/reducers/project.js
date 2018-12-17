@@ -229,6 +229,12 @@ function projectReducer(state = initialState, action) {
         versions: []
       };
     }
+    case 'LIST_FILES_RES': {
+      return {
+        ...state,
+        code: action.code
+      };
+    }
     case 'DELETE_CONFIG_RES': {
       return {
         ...state,
