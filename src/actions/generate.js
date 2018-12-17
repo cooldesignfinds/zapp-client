@@ -1,11 +1,12 @@
 import axios from 'axios';
-import Bluebird from 'bluebird';
 
 import action from '../lib/action';
+import getItemPathParts from '../lib/getItemPathParts';
 import merge from '../lib/merge';
 import orderedMapToObject from '../lib/orderedMapToObject';
+import updateItem from './updateItem';
 
-function generateAction({
+async function generateAction({
   dispatch,
   state
 }) {
@@ -53,28 +54,37 @@ function generateAction({
     }
   );
 
-  return Bluebird.resolve()
-    .then(() => {
-      return axios({
-        method: 'post',
-        url: 'http://localhost:12345/generateCode',
-        data: {
-          cwd: state.project.cwd,
-          project: zappParams
-        }
-      });
-    })
-    .then(() => {
-      dispatch({
-        type: 'GENERATE_RES'
-      });
-    })
-    .catch((error) => {
-      dispatch({
-        type: 'GENERATE_ERR',
-        error: error.message
-      });
+  try {
+    const result = await axios({
+      method: 'post',
+      url: 'http://localhost:12345/generateCode',
+      data: {
+        cwd: state.project.cwd,
+        project: zappParams
+      }
     });
+
+    state.pane.items.forEach(async (paneItem, paneIndex) => {
+      if (paneItem.type === 'code' && result.data.files[paneItem.tree.selectedItem.substr(1)]) {
+        dispatch(updateItem({
+          paneIndex,
+          paneType: 'code',
+          itemPathParts: getItemPathParts(paneItem.tree.selectedItem),
+          itemType: 'string',
+          itemValue: result.data.files[paneItem.tree.selectedItem.substr(1)]
+        }));
+      }
+    });
+
+    dispatch({
+      type: 'GENERATE_RES'
+    });
+  } catch (error) {
+    dispatch({
+      type: 'GENERATE_ERR',
+      error: error.message
+    });
+  }
 }
 
 export default action(generateAction);

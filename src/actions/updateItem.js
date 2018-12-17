@@ -137,7 +137,9 @@ function updateItem({
       paneIndex,
       paneType
     });
-    dispatch(generate());
+    if (paneType !== 'code') {
+      dispatch(generate());
+    }
   };
 }
 
