@@ -56,7 +56,7 @@
     "xterm": "^3.4.1"
   },
   "scripts": {
-    "build": "NODE_ENV=development webpack",
+    "build": "NODE_ENV=development webpack && rm -rf build/alpha && mkdir -p build/alpha && zip -r build/alpha/zapp-client.zip tmp -x \"*.DS_Store\"",
     "start": "webpack-dev-server",
     "test": "mocha --recursive --require babel-register"
   }

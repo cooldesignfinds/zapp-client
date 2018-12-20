@@ -40,7 +40,7 @@ const config = {
   },
   production: {
     baseHref: '/',
-    outputPath: 'build',
+    outputPath: 'dist',
     app: [
       'babel-polyfill',
       './App.jsx'
